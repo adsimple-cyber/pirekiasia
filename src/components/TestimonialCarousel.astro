@@ -59,7 +59,7 @@ const allTestimonials = [...testimonials, ...testimonials];
     <div class="relative">
         <div class="flex gap-6 animate-scroll-left">
             {allTestimonials.map((testimonial) => (
-                <div class="flex-shrink-0 w-[350px] md:w-[400px] bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                <div class="flex-shrink-0 w-[300px] md:w-[400px] bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
                     <!-- Stars -->
                     <div class="flex gap-1 text-yellow-400 mb-4">
                         {[1,2,3,4,5].map(() => (
@@ -101,7 +101,7 @@ const allTestimonials = [...testimonials, ...testimonials];
     }
 
     .animate-scroll-left {
-        animation: scroll-left 40s linear infinite;
+        animation: scroll-left 25s linear infinite;
     }
 
     .animate-scroll-left:hover {
