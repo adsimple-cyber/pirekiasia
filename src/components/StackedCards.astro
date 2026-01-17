@@ -1,0 +1,143 @@
+---
+/**
+ * Stacked Cards Section
+ * Sticky cards that stack on scroll - inspired by pireki.id
+ */
+
+const cards = [
+    {
+        title: "Berpengalaman Sejak 2008",
+        description:
+            "Lebih dari satu dekade menghadirkan inovasi dalam sistem partisi dan movable wall. Sebagai produsen langsung sejak 2011, kami memahami detail teknis hingga estetika terbaik untuk setiap ruang.",
+        link: "/tentang-kami",
+        linkText: "Tentang Pireki",
+        image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800",
+    },
+    {
+        title: "1000+ Proyek di Seluruh Indonesia",
+        description:
+            "Dari ballroom hotel, ruang rapat perusahaan, hingga ruang belajar kampus — lebih dari seribu proyek telah kami selesaikan dengan standar profesionalisme dan ketepatan waktu.",
+        link: "/galeri",
+        linkText: "Proyek Pemasangan",
+        image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&q=80&w=800",
+    },
+    {
+        title: "Dipercaya oleh Klien Besar",
+        description:
+            "Komitmen kami teruji melalui kepercayaan banyak nama besar: PT. Takenaka Indonesia, Universitas Warmadewa, serta berbagai lembaga pemerintahan dan swasta di seluruh Indonesia. Karena bagi kami, setiap proyek adalah cermin dari reputasi Pireki.",
+        link: "/kontak",
+        linkText: "Hubungi Kami",
+        image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800",
+    },
+];
+---
+
+<section class="bg-slate-950 py-24 relative">
+    <div class="container mx-auto px-4 md:px-6">
+        <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+            <!-- Left Column: Sticky Image -->
+            <div class="lg:sticky lg:top-32 h-fit">
+                <div
+                    class="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/5]"
+                >
+                    <img
+                        src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800"
+                        alt="Pireki Projects"
+                        class="w-full h-full object-cover"
+                        id="stacked-image"
+                    />
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"
+                    >
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Stacked Cards -->
+            <div class="space-y-8">
+                {
+                    cards.map((card, idx) => (
+                        <div
+                            class="stacked-card sticky bg-slate-900 border border-slate-800 rounded-2xl p-8 md:p-10 shadow-xl transition-all duration-300"
+                            style={`top: calc(8rem + ${idx * 2}rem);`}
+                            data-image={card.image}
+                        >
+                            <h3 class="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight leading-tight">
+                                {card.title}
+                            </h3>
+                            <p class="text-slate-400 text-lg leading-relaxed mb-6">
+                                {card.description}
+                            </p>
+                            <a
+                                href={card.link}
+                                class="inline-flex items-center gap-2 text-orange-500 font-semibold hover:text-orange-400 transition-colors group"
+                            >
+                                {card.linkText}
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="group-hover:translate-x-1 transition-transform"
+                                >
+                                    <path d="M5 12h14" />
+                                    <path d="m12 5 7 7-7 7" />
+                                </svg>
+                            </a>
+                        </div>
+                    ))
+                }
+
+                <!-- Extra space for stacking effect -->
+                <div class="h-48"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Image switcher on scroll
+    document.addEventListener("DOMContentLoaded", () => {
+        const cards = document.querySelectorAll(".stacked-card");
+        const image = document.getElementById(
+            "stacked-image",
+        ) as HTMLImageElement;
+
+        if (!image || cards.length === 0) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const newSrc = (entry.target as HTMLElement).dataset
+                            .image;
+                        if (newSrc && image.src !== newSrc) {
+                            image.style.opacity = "0";
+                            setTimeout(() => {
+                                image.src = newSrc;
+                                image.style.opacity = "1";
+                            }, 200);
+                        }
+                    }
+                });
+            },
+            {
+                threshold: 0.5,
+                rootMargin: "-100px 0px -100px 0px",
+            },
+        );
+
+        cards.forEach((card) => observer.observe(card));
+    });
+</script>
+
+<style>
+    #stacked-image {
+        transition: opacity 0.3s ease-in-out;
+    }
+</style>

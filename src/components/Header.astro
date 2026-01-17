@@ -1,0 +1,282 @@
+---
+/**
+ * Header/Navbar Component
+ * Desktop and Mobile navigation with dropdowns
+ */
+
+// Navigation menu data
+const menu = [
+  { title: "Beranda", url: "/" },
+  { 
+    title: "Produk", 
+    url: "/produk",
+    items: [
+      { 
+        title: "Movable Wall", 
+        description: "Partisi geser kedap suara untuk ballroom dan ruang rapat.",
+        url: "/produk/movable-wall",
+        icon: "boxes"
+      },
+      { 
+        title: "Folding Gate PVC", 
+        description: "Pintu lipat ekonomis untuk berbagai kebutuhan.",
+        url: "/produk/folding-gate",
+        icon: "layout"
+      },
+      { 
+        title: "Partisi Lipat", 
+        description: "Solusi partisi semi-permanen yang fleksibel.",
+        url: "/produk/partisi-lipat",
+        icon: "sparkles"
+      },
+      { 
+        title: "Aksesoris", 
+        description: "Sparepart dan aksesoris original.",
+        url: "/produk/aksesoris",
+        icon: "palette"
+      }
+    ]
+  },
+  { 
+    title: "Perusahaan", 
+    url: "/tentang-kami",
+    items: [
+      { title: "Tentang Kami", url: "/tentang-kami", icon: "users" },
+      { title: "Galeri Proyek", url: "/galeri", icon: "history" },
+      { title: "Sertifikasi", url: "/sertifikasi", icon: "graduation" }
+    ]
+  },
+  { 
+    title: "Info", 
+    url: "/blog",
+    items: [
+      { title: "Blog & Artikel", url: "/blog", icon: "book" }
+    ]
+  },
+  { title: "Kontak", url: "/kontak" }
+];
+---
+
+<header id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-transparent py-4">
+  <div class="container mx-auto px-4">
+    
+    <!-- Desktop Navbar -->
+    <nav class="hidden lg:flex justify-between items-center">
+      <!-- Logo -->
+      <div class="flex items-center gap-8">
+        <a href="/" class="flex items-center gap-3 group">
+          <img src="/logo.svg" alt="Pireki Asia Logo" class="h-10 w-auto group-hover:scale-105 transition-transform" />
+        </a>
+        
+        <!-- Navigation Links -->
+        <nav class="flex items-center ml-8 gap-1">
+          {menu.map((item) => (
+            item.items ? (
+              <div class="relative group">
+                <button class="inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:bg-white/10 hover:text-yellow-400 focus:bg-white/10 focus:outline-none text-white/90 uppercase tracking-wide">
+                  {item.title}
+                  <svg class="relative top-[1px] ml-1 h-3 w-3 transition duration-300 group-hover:rotate-180" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m6 9 6 6 6-6"/>
+                  </svg>
+                </button>
+                
+                <!-- Dropdown -->
+                <div class="absolute top-full left-0 w-[400px] md:w-[500px] bg-white rounded-lg shadow-xl p-4 mt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top scale-95 group-hover:scale-100 z-50">
+                  <ul class="grid w-full gap-3 p-2 md:grid-cols-2 list-none">
+                    {item.items.map((subItem) => (
+                      <li>
+                        <a 
+                          href={subItem.url}
+                          class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-slate-50 focus:bg-slate-50 group/item"
+                        >
+                          <div class="flex items-center gap-2 font-semibold text-slate-900 group-hover/item:text-[#072181]">
+                            {subItem.title}
+                          </div>
+                          {('description' in subItem) && subItem.description && (
+                            <p class="line-clamp-2 text-sm leading-snug text-slate-500 mt-1">
+                              {subItem.description}
+                            </p>
+                          )}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ) : (
+              <a 
+                href={item.url}
+                class="inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium text-white/90 transition-colors hover:bg-white/10 hover:text-yellow-400 focus:bg-white/10 focus:outline-none uppercase tracking-wide"
+              >
+                {item.title}
+              </a>
+            )
+          ))}
+        </nav>
+      </div>
+      
+      <!-- Right Actions -->
+      <div class="flex items-center gap-3">
+        <!-- Search Button -->
+        <button 
+          class="h-10 w-10 inline-flex items-center justify-center rounded-md text-white hover:bg-white/10 hover:text-yellow-400 transition-colors"
+          title="Search"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+          </svg>
+        </button>
+        
+        <!-- CTA Buttons -->
+        <a 
+          href="/kontak"
+          class="hidden xl:inline-flex h-9 rounded-full px-5 text-xs font-semibold items-center justify-center border border-white/30 text-white bg-white/5 hover:bg-white hover:text-[#072181] transition-colors backdrop-blur-sm"
+        >
+          Hubungi Kami
+        </a>
+        <a 
+          href="/kontak#penawaran"
+          class="inline-flex h-9 rounded-full px-5 text-xs font-semibold items-center justify-center bg-yellow-500 text-white hover:bg-yellow-600 shadow-lg shadow-yellow-500/20 transition-colors"
+        >
+          Minta Penawaran
+        </a>
+      </div>
+    </nav>
+    
+    <!-- Mobile Navbar -->
+    <div class="flex lg:hidden items-center justify-between">
+      <a href="/" class="flex items-center gap-2">
+        <img src="/logo.svg" alt="Pireki Asia" class="h-10 w-auto brightness-0 invert" />
+      </a>
+      
+      <div class="flex items-center gap-2">
+        <!-- Search Button -->
+        <button class="h-10 w-10 inline-flex items-center justify-center text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+          </svg>
+        </button>
+        
+        <!-- Mobile Menu Button -->
+        <button 
+          id="mobile-menu-button"
+          class="h-10 w-10 inline-flex items-center justify-center text-white hover:bg-white/20 rounded-md"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" x2="20" y1="12" y2="12"></line>
+            <line x1="4" x2="20" y1="6" y2="6"></line>
+            <line x1="4" x2="20" y1="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Mobile Menu Drawer -->
+  <div 
+    id="mobile-menu"
+    class="fixed inset-0 z-50 hidden"
+  >
+    <!-- Backdrop -->
+    <div id="mobile-menu-backdrop" class="fixed inset-0 bg-black/80"></div>
+    
+    <!-- Drawer -->
+    <div class="fixed inset-y-0 right-0 h-full w-3/4 max-w-sm bg-white p-6 shadow-lg overflow-y-auto transform translate-x-full transition-transform duration-300" id="mobile-drawer">
+      <!-- Close Button -->
+      <button 
+        id="mobile-menu-close"
+        class="absolute right-4 top-4 rounded-sm opacity-70 hover:opacity-100 cursor-pointer"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 6 6 18"></path>
+          <path d="m6 6 12 12"></path>
+        </svg>
+      </button>
+      
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-2 mb-6">
+        <img src="/logo.svg" alt="Pireki Asia" class="h-8 w-auto" />
+      </a>
+      
+      <!-- Menu Items -->
+      <nav class="flex flex-col gap-4 mt-6">
+        {menu.map((item) => (
+          item.items ? (
+            <div class="space-y-3">
+              <div class="font-bold text-[#072181] border-b pb-2 text-sm uppercase tracking-wide">
+                {item.title}
+              </div>
+              <div class="pl-2 space-y-3">
+                {item.items.map((sub) => (
+                  <a 
+                    href={sub.url}
+                    class="block text-sm text-slate-600 hover:text-[#072181]"
+                  >
+                    {sub.title}
+                  </a>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <a 
+              href={item.url}
+              class="font-bold text-slate-800 hover:text-[#072181] block border-b pb-2 text-sm uppercase tracking-wide"
+            >
+              {item.title}
+            </a>
+          )
+        ))}
+      </nav>
+      
+      <!-- Extra Links -->
+      <div class="border-t border-gray-200 py-4 mt-6">
+        <div class="grid grid-cols-2 gap-4">
+          <a href="https://wa.me/6281234567890" class="inline-flex h-10 items-center gap-2 rounded-md px-4 py-2 text-sm font-medium text-slate-600 hover:bg-gray-100">
+            WhatsApp
+          </a>
+          <a href="mailto:info@cvpirekiasia.com" class="inline-flex h-10 items-center gap-2 rounded-md px-4 py-2 text-sm font-medium text-slate-600 hover:bg-gray-100">
+            Email
+          </a>
+          <a href="/kontak#lokasi" class="inline-flex h-10 items-center gap-2 rounded-md px-4 py-2 text-sm font-medium text-slate-600 hover:bg-gray-100">
+            Lokasi
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script is:inline>
+  // Mobile menu toggle
+  document.addEventListener('DOMContentLoaded', function() {
+    const menuButton = document.getElementById('mobile-menu-button');
+    const menuClose = document.getElementById('mobile-menu-close');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileDrawer = document.getElementById('mobile-drawer');
+    const backdrop = document.getElementById('mobile-menu-backdrop');
+    
+    function openMenu() {
+      if (mobileMenu && mobileDrawer) {
+        mobileMenu.classList.remove('hidden');
+        setTimeout(function() {
+          mobileDrawer.classList.remove('translate-x-full');
+        }, 10);
+      }
+    }
+    
+    function closeMenu() {
+      if (mobileMenu && mobileDrawer) {
+        mobileDrawer.classList.add('translate-x-full');
+        setTimeout(function() {
+          mobileMenu.classList.add('hidden');
+        }, 300);
+      }
+    }
+    
+    if (menuButton) menuButton.addEventListener('click', openMenu);
+    if (menuClose) menuClose.addEventListener('click', closeMenu);
+    if (backdrop) backdrop.addEventListener('click', closeMenu);
+  });
+</script>

@@ -1,0 +1,39 @@
+---
+/**
+ * Logo Marquee Component
+ * Infinite scrolling client logos
+ */
+
+const logos = [
+    { name: "Antam", src: "/antam-1.webp" },
+    { name: "BNI", src: "/bni-1.webp" },
+    { name: "Menara Syariah Tower", src: "/menara_syariah_tower-1.webp" },
+    { name: "Pertamina", src: "/pertamina-1.webp" },
+    { name: "Universitas Airlangga", src: "/univ_airlangga-1.webp" },
+];
+
+// Duplicate for seamless loop
+const allLogos = [...logos, ...logos];
+---
+
+<div
+    class="w-full overflow-hidden bg-white/5 border-t border-white/10 backdrop-blur-md py-8"
+>
+    <div class="flex items-center">
+        <div class="flex gap-12 md:gap-20 items-center px-4 animate-marquee">
+            {
+                allLogos.map((logo) => (
+                    <div class="flex-shrink-0 grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100 cursor-pointer">
+                        <img
+                            src={logo.src}
+                            alt={logo.name}
+                            class="h-8 md:h-10 w-auto object-contain"
+                            loading="lazy"
+                            onerror="this.style.display='none'"
+                        />
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</div>

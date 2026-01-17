@@ -1,0 +1,228 @@
+---
+/**
+ * Trusted Logos Section
+ * Static display of client logos with animated background
+ */
+const logos = [
+    { name: "Antam", src: "/antam-1.webp" },
+    { name: "BNI", src: "/bni-1.webp" },
+    { name: "Pertamina", src: "/pertamina-1.webp" },
+    { name: "Menara Syariah Tower", src: "/menara_syariah_tower-1.webp" },
+    { name: "Universitas Airlangga", src: "/univ_airlangga-1.webp" },
+];
+---
+
+<section
+    class="py-16 bg-white border-b border-gray-50 relative overflow-hidden"
+>
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0 pointer-events-none">
+        <!-- Floating Circles -->
+        <div
+            class="absolute top-10 left-10 w-32 h-32 rounded-full bg-blue-100/40 blur-2xl animate-float-slow"
+        >
+        </div>
+        <div
+            class="absolute bottom-10 right-20 w-48 h-48 rounded-full bg-yellow-100/30 blur-3xl animate-float-delay"
+        >
+        </div>
+        <div
+            class="absolute top-1/2 left-1/4 w-24 h-24 rounded-full bg-indigo-100/30 blur-xl animate-float-reverse"
+        >
+        </div>
+
+        <!-- Connecting Lines -->
+        <svg class="absolute inset-0 w-full h-full opacity-20">
+            <defs>
+                <linearGradient
+                    id="lineGrad1"
+                    x1="0%"
+                    y1="0%"
+                    x2="100%"
+                    y2="0%"
+                >
+                    <stop offset="0%" style="stop-color:#072181;stop-opacity:0"
+                    ></stop>
+                    <stop
+                        offset="50%"
+                        style="stop-color:#072181;stop-opacity:0.5"></stop>
+                    <stop
+                        offset="100%"
+                        style="stop-color:#072181;stop-opacity:0"></stop>
+                </linearGradient>
+            </defs>
+            <line
+                x1="0"
+                y1="30%"
+                x2="100%"
+                y2="30%"
+                stroke="url(#lineGrad1)"
+                stroke-width="1"
+                class="animate-line-pulse"></line>
+            <line
+                x1="0"
+                y1="70%"
+                x2="100%"
+                y2="70%"
+                stroke="url(#lineGrad1)"
+                stroke-width="1"
+                class="animate-line-pulse-delay"></line>
+        </svg>
+
+        <!-- Dots Pattern -->
+        <div
+            class="absolute top-20 right-1/4 w-2 h-2 bg-blue-300/40 rounded-full animate-pulse"
+        >
+        </div>
+        <div
+            class="absolute bottom-20 left-1/3 w-1.5 h-1.5 bg-yellow-400/50 rounded-full animate-pulse-delay"
+        >
+        </div>
+        <div
+            class="absolute top-1/3 right-10 w-2 h-2 bg-indigo-300/40 rounded-full animate-pulse"
+        >
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 md:px-6 relative z-10">
+        <div class="flex flex-col items-center">
+            <!-- Company Introduction -->
+            <div class="text-center max-w-3xl mb-12">
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-900 mb-4">
+                    CV Pireki Asia
+                </h2>
+                <p class="text-slate-600 leading-relaxed">
+                    Produsen dan spesialis pemasangan partisi geser (movable
+                    wall) serta pintu lipat kedap suara sejak 2008. Kami
+                    melayani kebutuhan partisi untuk ballroom hotel, ruang
+                    rapat, ruang kelas, dan berbagai kebutuhan komersial lainnya
+                    di seluruh Indonesia.
+                </p>
+            </div>
+
+            <p
+                class="text-slate-500 text-sm md:text-base font-bold uppercase tracking-[0.15em] mb-12"
+            >
+                Dipercaya Oleh Instansi Ternama
+            </p>
+
+            <!-- Logos with connecting lines -->
+            <div
+                class="flex flex-wrap justify-center gap-12 md:gap-24 items-center relative"
+            >
+                {
+                    logos.map((logo, idx) => (
+                        <div class="flex-shrink-0 relative group">
+                            <img
+                                src={logo.src}
+                                alt={logo.name}
+                                class="h-16 md:h-32 w-auto object-contain transition-transform hover:scale-110"
+                                loading="lazy"
+                            />
+                            {idx < logos.length - 1 && (
+                                <div class="hidden md:block absolute top-1/2 -right-12 w-6 h-px bg-gradient-to-r from-blue-300 to-transparent animate-line-extend" />
+                            )}
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    @keyframes float-slow {
+        0%,
+        100% {
+            transform: translateY(0) translateX(0);
+        }
+        50% {
+            transform: translateY(-20px) translateX(10px);
+        }
+    }
+
+    @keyframes float-delay {
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(15px);
+        }
+    }
+
+    @keyframes float-reverse {
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(20px);
+        }
+    }
+
+    @keyframes line-pulse {
+        0%,
+        100% {
+            opacity: 0.1;
+        }
+        50% {
+            opacity: 0.3;
+        }
+    }
+
+    @keyframes line-extend {
+        0%,
+        100% {
+            width: 0;
+            opacity: 0;
+        }
+        50% {
+            width: 24px;
+            opacity: 1;
+        }
+    }
+
+    @keyframes pulse-delay {
+        0%,
+        100% {
+            opacity: 0.3;
+            transform: scale(1);
+        }
+        50% {
+            opacity: 0.8;
+            transform: scale(1.3);
+        }
+    }
+
+    .animate-float-slow {
+        animation: float-slow 15s ease-in-out infinite;
+    }
+
+    .animate-float-delay {
+        animation: float-delay 12s ease-in-out infinite;
+        animation-delay: 2s;
+    }
+
+    .animate-float-reverse {
+        animation: float-reverse 18s ease-in-out infinite;
+    }
+
+    .animate-line-pulse {
+        animation: line-pulse 4s ease-in-out infinite;
+    }
+
+    .animate-line-pulse-delay {
+        animation: line-pulse 4s ease-in-out infinite;
+        animation-delay: 2s;
+    }
+
+    .animate-line-extend {
+        animation: line-extend 3s ease-in-out infinite;
+    }
+
+    .animate-pulse-delay {
+        animation: pulse-delay 3s ease-in-out infinite;
+        animation-delay: 1s;
+    }
+</style>

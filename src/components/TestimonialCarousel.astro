@@ -1,0 +1,110 @@
+---
+/**
+ * Testimonial Carousel Component
+ * Auto-sliding infinite testimonial cards
+ */
+
+const testimonials = [
+    {
+        name: "Pak Budi Santoso",
+        role: "General Manager, Hotel Santika",
+        content: "Partisi ballroom dari Pireki sangat berkualitas. Suara benar-benar tidak bocor dan pemasangannya sangat profesional.",
+        avatar: "https://i.pravatar.cc/100?img=11"
+    },
+    {
+        name: "Ibu Dewi Lestari",
+        role: "Kepala Bagian Umum, Universitas Airlangga",
+        content: "Kami sangat puas dengan movable wall untuk ruang kuliah. Fleksibilitas ruang meningkat drastis.",
+        avatar: "https://i.pravatar.cc/100?img=5"
+    },
+    {
+        name: "Pak Andi Wijaya",
+        role: "Facility Manager, PT Pertamina",
+        content: "Pengerjaan cepat dan hasil sangat memuaskan. Tim Pireki sangat profesional dan responsif.",
+        avatar: "https://i.pravatar.cc/100?img=12"
+    },
+    {
+        name: "Ibu Siti Rahayu",
+        role: "Owner, Convention Hall Surabaya",
+        content: "Sudah 5 tahun menggunakan partisi Pireki, kualitasnya tetap prima. Sangat recommended!",
+        avatar: "https://i.pravatar.cc/100?img=9"
+    },
+    {
+        name: "Pak Herman Tanjung",
+        role: "Direktur, PT Takenaka Indonesia",
+        content: "Kerjasama dengan Pireki selalu lancar. Produknya sesuai spesifikasi dan tepat waktu.",
+        avatar: "https://i.pravatar.cc/100?img=15"
+    },
+    {
+        name: "Ibu Maya Anggraini",
+        role: "Arsitek Interior, Studio Design",
+        content: "Finishing HPL custom-nya sangat bagus dan presisi. Klien saya selalu puas dengan hasilnya.",
+        avatar: "https://i.pravatar.cc/100?img=20"
+    }
+];
+
+// Duplicate for seamless loop
+const allTestimonials = [...testimonials, ...testimonials];
+---
+
+<section class="py-20 bg-slate-50 overflow-hidden">
+    <div class="container mx-auto px-4 md:px-6 mb-12">
+        <div class="text-center max-w-2xl mx-auto">
+            <h2 class="text-[#072181] font-bold text-sm uppercase tracking-widest mb-3">Testimoni</h2>
+            <h3 class="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">Apa Kata Klien Kami</h3>
+        </div>
+    </div>
+
+    <!-- Carousel Container -->
+    <div class="relative">
+        <div class="flex gap-6 animate-scroll-left">
+            {allTestimonials.map((testimonial) => (
+                <div class="flex-shrink-0 w-[350px] md:w-[400px] bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                    <!-- Stars -->
+                    <div class="flex gap-1 text-yellow-400 mb-4">
+                        {[1,2,3,4,5].map(() => (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                            </svg>
+                        ))}
+                    </div>
+                    
+                    <!-- Content -->
+                    <p class="text-slate-600 leading-relaxed mb-6 text-sm">"{testimonial.content}"</p>
+                    
+                    <!-- Author -->
+                    <div class="flex items-center gap-3">
+                        <img 
+                            src={testimonial.avatar} 
+                            alt={testimonial.name}
+                            class="w-12 h-12 rounded-full object-cover"
+                        />
+                        <div>
+                            <div class="font-bold text-slate-900 text-sm">{testimonial.name}</div>
+                            <div class="text-slate-500 text-xs">{testimonial.role}</div>
+                        </div>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>
+
+<style>
+    @keyframes scroll-left {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+
+    .animate-scroll-left {
+        animation: scroll-left 40s linear infinite;
+    }
+
+    .animate-scroll-left:hover {
+        animation-play-state: paused;
+    }
+</style>

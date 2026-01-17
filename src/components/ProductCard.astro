@@ -1,0 +1,139 @@
+---
+/**
+ * Product Card Component
+ * Product card with expandable specs accordion
+ */
+
+interface ProductSpec {
+    label: string;
+    value: string;
+}
+
+interface Props {
+    title: string;
+    slug: string;
+    tag: string;
+    image: string;
+    focus: string;
+    specs: ProductSpec[];
+}
+
+const { title, slug, tag, image, focus, specs } = Astro.props;
+const cardId = `product-${slug}`;
+---
+
+<div
+    class="group relative overflow-hidden rounded-lg bg-white shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col h-fit self-start"
+>
+    <!-- Tag Badge -->
+    <div
+        class="absolute top-4 left-4 z-10 bg-[#072181] text-white text-[10px] font-bold px-3 py-1 uppercase tracking-widest rounded-sm"
+    >
+        {tag}
+    </div>
+
+    <!-- Image -->
+    <div class="h-64 overflow-hidden relative shrink-0">
+        <div
+            class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/10 transition-all z-10"
+        >
+        </div>
+        <img
+            src={image}
+            alt={title}
+            class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+            loading="lazy"
+        />
+    </div>
+
+    <!-- Content -->
+    <div class="p-6 flex flex-col flex-1 bg-white relative z-20">
+        <h3
+            class="text-xl font-bold text-slate-900 mb-2 group-hover:text-[#072181] transition-colors"
+        >
+            {title}
+        </h3>
+        <p class="text-sm text-slate-600 font-medium mb-3">{focus}</p>
+
+        <!-- Expandable Specs -->
+        <div
+            id={`${cardId}-specs`}
+            class="hidden mb-6 bg-slate-50 rounded-lg p-4 border border-slate-100"
+        >
+            <ul class="space-y-3">
+                {
+                    specs.map((spec) => (
+                        <li class="flex flex-col text-xs border-b border-slate-200 pb-2 last:border-0 last:pb-0">
+                            <span class="font-bold text-slate-500 uppercase tracking-wide text-[10px] mb-0.5">
+                                {spec.label}
+                            </span>
+                            <span class="text-slate-800 font-medium">
+                                {spec.value}
+                            </span>
+                        </li>
+                    ))
+                }
+            </ul>
+        </div>
+
+        <!-- Toggle Button -->
+        <button
+            id={`${cardId}-btn`}
+            data-card-id={cardId}
+            class="product-toggle-btn w-full border border-slate-200 text-slate-700 hover:border-[#072181] hover:text-[#072181] text-xs font-bold uppercase tracking-wide mt-auto transition-all flex items-center justify-center gap-2 h-10 rounded-md"
+        >
+            <span class="btn-text">Lihat Detail</span>
+            <svg
+                class="btn-icon-down w-3.5 h-3.5"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <path d="m6 9 6 6 6-6"></path>
+            </svg>
+            <svg
+                class="btn-icon-up w-3.5 h-3.5 hidden"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <path d="m18 15-6-6-6 6"></path>
+            </svg>
+        </button>
+    </div>
+</div>
+
+<script>
+    // Product card accordion toggle
+    document.querySelectorAll(".product-toggle-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+            const cardId = btn.getAttribute("data-card-id");
+            const specs = document.getElementById(`${cardId}-specs`);
+            const btnText = btn.querySelector(".btn-text");
+            const iconDown = btn.querySelector(".btn-icon-down");
+            const iconUp = btn.querySelector(".btn-icon-up");
+
+            if (specs?.classList.contains("hidden")) {
+                specs.classList.remove("hidden");
+                btn.classList.add("bg-slate-50");
+                if (btnText) btnText.textContent = "Tutup Detail";
+                iconDown?.classList.add("hidden");
+                iconUp?.classList.remove("hidden");
+            } else {
+                specs?.classList.add("hidden");
+                btn.classList.remove("bg-slate-50");
+                if (btnText) btnText.textContent = "Lihat Detail";
+                iconDown?.classList.remove("hidden");
+                iconUp?.classList.add("hidden");
+            }
+        });
+    });
+</script>

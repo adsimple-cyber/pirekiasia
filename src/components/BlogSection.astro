@@ -1,0 +1,55 @@
+---
+/**
+ * Blog Section Component
+ * Displays recent blog posts
+ */
+import BlogCard from "./BlogCard.astro";
+import type { Post } from "../lib/wordpress";
+
+interface Props {
+    posts: Post[];
+    showHeader?: boolean;
+}
+
+const { posts, showHeader = true } = Astro.props;
+---
+
+<section class="py-24 bg-gray-50">
+    <div class="container mx-auto px-4 md:px-6">
+        {
+            showHeader && (
+                <div class="flex flex-col md:flex-row justify-between items-end mb-12">
+                    <div>
+                        <h2 class="text-[#072181] font-bold text-sm uppercase tracking-widest mb-3">
+                            Wawasan
+                        </h2>
+                        <h3 class="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
+                            Artikel & Edukasi
+                        </h3>
+                    </div>
+                    <a
+                        href="/blog"
+                        class="text-[#072181] font-bold text-sm uppercase tracking-wide hover:underline mt-4 md:mt-0"
+                    >
+                        Lihat Semua Artikel
+                    </a>
+                </div>
+            )
+        }
+
+        <!-- Blog Grid -->
+        <div class="grid md:grid-cols-3 gap-8">
+            {
+                posts.map((post) => (
+                    <BlogCard
+                        title={post.title}
+                        slug={post.slug}
+                        date={post.date}
+                        image={post.image}
+                        excerpt={post.excerpt}
+                    />
+                ))
+            }
+        </div>
+    </div>
+</section>

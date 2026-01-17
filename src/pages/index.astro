@@ -1,0 +1,70 @@
+---
+/**
+ * Home Page
+ * CV Pireki Asia - Soundproof Room Partitions
+ */
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import Benefits from "../components/Benefits.astro";
+import TrustedLogos from "../components/TrustedLogos.astro";
+import ProductGrid from "../components/ProductGrid.astro";
+import BentoGrid from "../components/BentoGrid.astro";
+import StackedCards from "../components/StackedCards.astro";
+import BlogSection from "../components/BlogSection.astro";
+import TestimonialCarousel from "../components/TestimonialCarousel.astro";
+import FAQ from "../components/FAQ.astro";
+import CTA from "../components/CTA.astro";
+
+// Import WordPress API helpers
+import {
+	fetchProducts,
+	fetchPosts,
+	STATIC_PRODUCTS,
+	STATIC_POSTS,
+} from "../lib/wordpress";
+
+// Fetch data from WordPress or use static fallback
+let products = await fetchProducts(3);
+let posts = await fetchPosts(3);
+
+// Use static data if API fails
+if (!products || products.length === 0) {
+	products = STATIC_PRODUCTS;
+}
+
+if (!posts || posts.length === 0) {
+	posts = STATIC_POSTS;
+}
+---
+
+<BaseLayout title="Spesialis Partisi Ruangan Kedap Suara">
+	<!-- Hero Section -->
+	<Hero />
+
+	<!-- Trusted Logos Section -->
+	<TrustedLogos />
+
+	<!-- Benefits Section -->
+	<Benefits />
+
+	<!-- Products Section -->
+	<ProductGrid products={products} />
+
+	<!-- Applications Bento Grid -->
+	<BentoGrid />
+
+	<!-- Stacked Cards Section -->
+	<StackedCards />
+
+	<!-- Blog Section -->
+	<BlogSection posts={posts} />
+
+	<!-- Testimonials Carousel -->
+	<TestimonialCarousel />
+
+	<!-- FAQ Section -->
+	<FAQ />
+
+	<!-- CTA Section -->
+	<CTA />
+</BaseLayout>
