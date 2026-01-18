@@ -1,0 +1,138 @@
+---
+/**
+ * FlowGallery Component
+ * 3D "Coverflow" style gallery for showcasing images
+ */
+
+const images = [
+    "/slide1.webp",
+    "/slide2.webp",
+    "/slide3.webp",
+    "/slide4.webp",
+    "/slide5.webp",
+    "/slide6.webp",
+    "/slide7.webp",
+];
+---
+
+<section class="py-20 bg-slate-50 overflow-hidden">
+    <div class="container mx-auto px-4 text-center mb-12">
+        <h2
+            class="text-[#072181] font-bold text-sm uppercase tracking-widest mb-3"
+        >
+            Galeri Proyek
+        </h2>
+        <h3
+            class="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight"
+        >
+            Dokumentasi Pemasangan
+        </h3>
+    </div>
+
+    <div
+        class="gallery-container relative w-full max-w-5xl mx-auto h-[400px] md:h-[500px] perspective-1000"
+    >
+        <div
+            class="gallery-track relative w-full h-full flex items-center justify-center transform-style-3d"
+        >
+            {
+                images.map((img, idx) => (
+                    <div
+                        class="gallery-item absolute w-[260px] md:w-[400px] aspect-[4/5] md:aspect-video bg-white shadow-2xl rounded-2xl overflow-hidden transition-all duration-500 ease-out cursor-pointer"
+                        data-index={idx}
+                    >
+                        <img
+                            src={img}
+                            alt={`Gallery ${idx + 1}`}
+                            class="w-full h-full object-cover"
+                        />
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors" />
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</section>
+
+<style>
+    .perspective-1000 {
+        perspective: 1000px;
+    }
+    .transform-style-3d {
+        transform-style: preserve-3d;
+    }
+</style>
+
+<script>
+    function initGallery() {
+        const track = document.querySelector(".gallery-track") as HTMLElement;
+        const items = Array.from(
+            document.querySelectorAll(".gallery-item"),
+        ) as HTMLElement[];
+        const prevBtn = document.querySelector(".nav-btn.prev");
+        const nextBtn = document.querySelector(".nav-btn.next");
+
+        if (!track || items.length === 0) return;
+
+        let currentIndex = Math.floor(items.length / 2);
+
+        function updateGallery() {
+            items.forEach((item, index) => {
+                const offset = index - currentIndex;
+
+                // Calculate styles based on distance from center
+                const absOffset = Math.abs(offset);
+                const isActive = offset === 0;
+
+                // Visual properties
+                let translateX = offset * 60; // Base spacing (percentage or px)
+                if (window.innerWidth >= 768)
+                    translateX = offset * 240; // Desktop spacing
+                else translateX = offset * 180; // Mobile spacing
+
+                const scale = isActive
+                    ? 1.1
+                    : Math.max(0.8 - absOffset * 0.1, 0.5);
+                const opacity = isActive
+                    ? 1
+                    : Math.max(1 - absOffset * 0.3, 0.3);
+                const zIndex = 100 - absOffset;
+                const rotateY = offset * -25; // Rotate inwards
+
+                item.style.transform = `translateX(${translateX}px) scale(${scale}) perspective(1000px) rotateY(${rotateY}deg)`;
+                item.style.zIndex = zIndex.toString();
+                item.style.opacity = opacity.toString();
+
+                // Click to navigate
+                item.onclick = () => {
+                    if (index !== currentIndex) {
+                        currentIndex = index;
+                        updateGallery();
+                    }
+                };
+            });
+        }
+
+        prevBtn?.addEventListener("click", () => {
+            currentIndex = (currentIndex - 1 + items.length) % items.length;
+            updateGallery();
+        });
+
+        nextBtn?.addEventListener("click", () => {
+            currentIndex = (currentIndex + 1) % items.length;
+            updateGallery();
+        });
+
+        // Auto slide
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % items.length;
+            updateGallery();
+        }, 5000);
+
+        // Initial render
+        updateGallery();
+    }
+
+    // Run on load
+    document.addEventListener("DOMContentLoaded", initGallery);
+</script>

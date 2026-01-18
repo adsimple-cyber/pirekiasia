@@ -5,6 +5,7 @@
  */
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
+import FlowGallery from "../components/FlowGallery.astro";
 import Benefits from "../components/Benefits.astro";
 import TrustedLogos from "../components/TrustedLogos.astro";
 import ProductGrid from "../components/ProductGrid.astro";
@@ -44,11 +45,11 @@ if (!posts || posts.length === 0) {
 	<!-- Trusted Logos Section -->
 	<TrustedLogos />
 
-	<!-- Benefits Section -->
-	<Benefits />
-
 	<!-- Products Section -->
 	<ProductGrid products={products} />
+
+	<!-- Flow Gallery Section -->
+	<FlowGallery />
 
 	<!-- Applications Bento Grid -->
 	<BentoGrid />

@@ -82,12 +82,12 @@ export function formatDate(dateString: string): string {
 async function fetchAPI<T>(endpoint: string): Promise<T | null> {
   try {
     const response = await fetch(`${API_URL}${endpoint}`);
-    
+
     if (!response.ok) {
       console.error(`API Error: ${response.status} ${response.statusText}`);
       return null;
     }
-    
+
     return await response.json() as T;
   } catch (error) {
     console.error('Fetch error:', error);
@@ -123,14 +123,14 @@ interface WPProduct {
 export async function fetchProducts(limit: number = 10): Promise<Product[]> {
   // Try custom post type first, fallback to posts
   let data = await fetchAPI<WPProduct[]>(`/produk?per_page=${limit}&_embed`);
-  
+
   if (!data) {
     // Fallback to posts with product category
     data = await fetchAPI<WPProduct[]>(`/posts?per_page=${limit}&_embed&categories=produk`);
   }
-  
+
   if (!data) return [];
-  
+
   return data.map(item => ({
     id: item.id,
     title: stripHtml(item.title.rendered),
@@ -149,13 +149,13 @@ export async function fetchProducts(limit: number = 10): Promise<Product[]> {
  */
 export async function fetchProductBySlug(slug: string): Promise<Product | null> {
   let data = await fetchAPI<WPProduct[]>(`/produk?slug=${slug}&_embed`);
-  
+
   if (!data || data.length === 0) {
     data = await fetchAPI<WPProduct[]>(`/posts?slug=${slug}&_embed`);
   }
-  
+
   if (!data || data.length === 0) return null;
-  
+
   const item = data[0];
   return {
     id: item.id,
@@ -192,9 +192,9 @@ interface WPPost {
  */
 export async function fetchPosts(limit: number = 10): Promise<Post[]> {
   const data = await fetchAPI<WPPost[]>(`/posts?per_page=${limit}&_embed`);
-  
+
   if (!data) return [];
-  
+
   return data.map(item => ({
     id: item.id,
     title: stripHtml(item.title.rendered),
@@ -212,9 +212,9 @@ export async function fetchPosts(limit: number = 10): Promise<Post[]> {
  */
 export async function fetchPostBySlug(slug: string): Promise<Post | null> {
   const data = await fetchAPI<WPPost[]>(`/posts?slug=${slug}&_embed`);
-  
+
   if (!data || data.length === 0) return null;
-  
+
   const item = data[0];
   return {
     id: item.id,
@@ -252,9 +252,9 @@ interface WPPage {
  */
 export async function fetchPageBySlug(slug: string): Promise<Page | null> {
   const data = await fetchAPI<WPPage[]>(`/pages?slug=${slug}`);
-  
+
   if (!data || data.length === 0) return null;
-  
+
   const item = data[0];
   return {
     id: item.id,
@@ -274,7 +274,7 @@ export const STATIC_PRODUCTS: Product[] = [
     title: "SOREPA",
     slug: "sorepa",
     tag: "Best Seller",
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800",
+    image: "/Sorepa.webp",
     focus: "Peredaman Suara Maksimal",
     excerpt: "Partisi geser premium dengan peredaman suara terbaik di kelasnya.",
     content: "",
@@ -293,7 +293,7 @@ export const STATIC_PRODUCTS: Product[] = [
     title: "SAMOWA",
     slug: "samowa",
     tag: "Populer",
-    image: "https://images.unsplash.com/photo-1577412647305-991150c7d163?auto=format&fit=crop&q=80&w=800",
+    image: "/Samowa.webp",
     focus: "Fleksibilitas & Harga Terjangkau",
     excerpt: "Partisi lipat fleksibel dengan harga terjangkau.",
     content: "",
@@ -312,7 +312,7 @@ export const STATIC_PRODUCTS: Product[] = [
     title: "NICE PARTITION",
     slug: "nice-partition",
     tag: "Ekonomis",
-    image: "https://images.unsplash.com/photo-1600607686527-6fb886090705?auto=format&fit=crop&q=80&w=800",
+    image: "/Nice Partisi.webp",
     focus: "Solusi Paling Ekonomis",
     excerpt: "Partisi ekonomis untuk kebutuhan sekat ruangan sederhana.",
     content: "",
