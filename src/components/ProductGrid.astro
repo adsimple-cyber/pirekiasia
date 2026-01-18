@@ -52,11 +52,11 @@ const { products, showHeader = true } = Astro.props;
 
         <!-- Product Grid/Carousel -->
         <div
-            class="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-6 md:grid md:grid-cols-3 md:gap-8 md:overflow-visible no-scrollbar"
+            class="-mx-4 px-4 md:mx-0 md:px-0 overflow-x-auto snap-x snap-mandatory flex gap-4 pb-6 md:grid md:grid-cols-3 md:gap-8 md:overflow-visible no-scrollbar"
         >
             {
                 products.map((product) => (
-                    <div class="flex-shrink-0 w-[280px] md:w-auto snap-center">
+                    <div class="flex-shrink-0 w-[280px] md:w-auto snap-center first:pl-2 last:pr-2 md:first:pl-0 md:last:pr-0">
                         <ProductCard
                             title={product.title}
                             slug={product.slug}
@@ -71,3 +71,16 @@ const { products, showHeader = true } = Astro.props;
         </div>
     </div>
 </section>
+
+<style>
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+</style>
