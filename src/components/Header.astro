@@ -48,6 +48,15 @@ const menu = [
   },
   { title: "Kontak", url: "/kontak" }
 ];
+  // Icon Definitions (Lucide Icons)
+  const iconMap: Record<string, string> = {
+    "mic-off": `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="1" y1="1" x2="23" y2="23"></line><path d="M9 9v3a3 3 0 0 0 5.12 2.12M15 9.34V4a3 3 0 0 0-5.94-.6"></path><path d="M17 16.95A7 7 0 0 1 5 12v-2m14 0v2a7 7 0 0 1-.11 1.23"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>`,
+    "layout": `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>`,
+    "align-justify": `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>`,
+    "users": `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>`,
+    "history": `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v5h5"></path><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"></path><path d="M12 7v5l3 3"></path></svg>`,
+    "book": `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>`
+  };
 ---
 
 <header id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-transparent py-4">
@@ -82,11 +91,14 @@ const menu = [
                           href={subItem.url}
                           class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-slate-50 focus:bg-slate-50 group/item"
                         >
-                          <div class="flex items-center gap-2 font-semibold text-slate-900 group-hover/item:text-[#072181]">
-                            {subItem.title}
+                          <div class="flex items-center gap-3 font-semibold text-slate-900 group-hover/item:text-[#072181]">
+                             {subItem.icon && iconMap[subItem.icon] && (
+                                <span class="text-[#072181] group-hover/item:scale-110 transition-transform" set:html={iconMap[subItem.icon]} />
+                             )}
+                            <span>{subItem.title}</span>
                           </div>
                           {('description' in subItem) && subItem.description && (
-                            <p class="line-clamp-2 text-sm leading-snug text-slate-500 mt-1">
+                            <p class="line-clamp-2 text-sm leading-snug text-slate-500 mt-1 pl-[28px]">
                               {subItem.description}
                             </p>
                           )}
@@ -189,8 +201,11 @@ const menu = [
               {item.items.map((sub) => (
                 <a 
                   href={sub.url}
-                  class="block text-sm font-medium text-slate-600 hover:text-[#072181] hover:translate-x-1 transition-transform"
+                  class="flex items-center gap-3 text-sm font-medium text-slate-600 hover:text-[#072181] hover:translate-x-1 transition-transform py-1"
                 >
+                  {sub.icon && iconMap[sub.icon] && (
+                    <span class="w-4 h-4 text-slate-400" set:html={iconMap[sub.icon]} />
+                  )}
                   {sub.title}
                 </a>
               ))}
