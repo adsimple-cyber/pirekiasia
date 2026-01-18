@@ -59,7 +59,7 @@ const allTestimonials = [...testimonials, ...testimonials];
     <div class="relative">
         <div class="flex gap-6 animate-scroll-left">
             {allTestimonials.map((testimonial) => (
-                <div class="flex-shrink-0 w-[300px] md:w-[400px] bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                <div class="flex-shrink-0 w-[260px] md:w-[350px] bg-white rounded-xl p-6 shadow-lg border border-gray-100">
                     <!-- Stars -->
                     <div class="flex gap-1 text-yellow-400 mb-4">
                         {[1,2,3,4,5].map(() => (
@@ -73,16 +73,9 @@ const allTestimonials = [...testimonials, ...testimonials];
                     <p class="text-slate-600 leading-relaxed mb-6 text-sm">"{testimonial.content}"</p>
                     
                     <!-- Author -->
-                    <div class="flex items-center gap-3">
-                        <img 
-                            src={testimonial.avatar} 
-                            alt={testimonial.name}
-                            class="w-12 h-12 rounded-full object-cover"
-                        />
-                        <div>
-                            <div class="font-bold text-slate-900 text-sm">{testimonial.name}</div>
-                            <div class="text-slate-500 text-xs">{testimonial.role}</div>
-                        </div>
+                    <div>
+                        <div class="font-bold text-slate-900 text-sm">{testimonial.name}</div>
+                        <div class="text-slate-500 text-xs">{testimonial.role}</div>
                     </div>
                 </div>
             ))}

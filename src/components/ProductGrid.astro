@@ -50,18 +50,22 @@ const { products, showHeader = true } = Astro.props;
             )
         }
 
-        <!-- Product Grid -->
-        <div class="grid md:grid-cols-3 gap-8 items-start">
+        <!-- Product Grid/Carousel -->
+        <div
+            class="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-6 md:grid md:grid-cols-3 md:gap-8 md:overflow-visible no-scrollbar"
+        >
             {
                 products.map((product) => (
-                    <ProductCard
-                        title={product.title}
-                        slug={product.slug}
-                        tag={product.tag}
-                        image={product.image}
-                        focus={product.focus}
-                        specs={product.specs}
-                    />
+                    <div class="flex-shrink-0 w-[280px] md:w-auto snap-center">
+                        <ProductCard
+                            title={product.title}
+                            slug={product.slug}
+                            tag={product.tag}
+                            image={product.image}
+                            focus={product.focus}
+                            specs={product.specs}
+                        />
+                    </div>
                 ))
             }
         </div>
