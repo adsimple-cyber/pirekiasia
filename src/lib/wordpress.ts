@@ -25,6 +25,13 @@ export interface Product {
   excerpt: string;
   content: string;
   specs: ProductSpec[];
+  bentoFeatures?: {
+    title: string;
+    description: string;
+    icon: string; // Lucide icon name
+    image?: string;
+    cols?: number; // 1 or 2
+  }[];
 }
 
 export interface Post {
@@ -268,7 +275,7 @@ export async function fetchPageBySlug(slug: string): Promise<Page | null> {
 // STATIC DATA (Fallback when API is unavailable)
 // ============================================
 
-export const STATIC_PRODUCTS: Product[] = [
+export const STATIC_PRODUCTS: Product[] & { bentoFeatures?: any[] } = [
   {
     id: 1,
     title: "SOREPA",
@@ -277,15 +284,45 @@ export const STATIC_PRODUCTS: Product[] = [
     image: "/Sorepa.webp",
     focus: "Peredaman Suara Maksimal",
     excerpt: "Partisi geser premium dengan peredaman suara terbaik di kelasnya.",
-    content: "",
+    content: "SOREPA (Sound Reduce Partition) adalah produk unggulan CV Pireki Asia yang dirancang khusus untuk memenuhi kebutuhan ruangan dengan insulasi suara tinggi. Ideal untuk Ballroom hotel, ruang meeting, auditorium, dan ruang kelas yang membutuhkan ketenangan maksimal.",
     specs: [
-      { label: "Sistem", value: "Sliding per Section (Geser)" },
-      { label: "Rangka Besi", value: "Hollow 5 x 5" },
-      { label: "Material Peredam", value: "Rockwool 60kg/m³" },
-      { label: "Ketebalan Panel", value: "~8 cm" },
-      { label: "Material Panel", value: "Multiplek / MDF 9-12 mm" },
-      { label: "Sistem Rel", value: "Rel Atas" },
-      { label: "Ideal Untuk", value: "Ballroom Hotel, Ruang Rapat Direksi, Studio Musik" }
+      { label: "Sistem", value: "Sliding per Section (Geser per panel)" },
+      { label: "Tingkat Peredaman", value: "STC 45 - STC 55 (High Insulation)" },
+      { label: "Rangka Konstruksi", value: "Hollow Besi 50x50 mm + Profil Aluminium Anodized" },
+      { label: "Isian (Inner Material)", value: "Rockwool Density 60-100kg/m³ + Paper Honeycomb" },
+      { label: "Ketebalan Panel", value: "100 mm" },
+      { label: "Panel Face", value: "MDF / Multiplek 12 mm" },
+      { label: "Finishing", value: "HPL, Wallpaper, Kain Cosglow / Ateja" },
+      { label: "Mekanisme", value: "Jack Mechanism (Atas & Bawah)" },
+      { label: "Sistem Rel", value: "Rel Gantung Aluminium (Tanpa Rel Bawah)" }
+    ],
+    bentoFeatures: [
+      {
+        title: "High Sound Insulation",
+        description: "Mampu meredam suara hingga 55 dB, setara dengan studio rekaman profesional.",
+        icon: "volume-x",
+        image: "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&q=80&w=800",
+        cols: 2
+      },
+      {
+        title: "Tanpa Rel Bawah",
+        description: "Lantai tetap bersih dan rapi tanpa gangguan rel yang menonjol.",
+        icon: "minus",
+        cols: 1
+      },
+      {
+        title: "Mekanisme Jack",
+        description: "Sistem pengunci internal yang kuat dan presisi untuk kekedapan sempurna.",
+        icon: "lock",
+        cols: 1
+      },
+      {
+        title: "Desain Elegan",
+        description: "Beragam pilihan finishing seperti HPL dan Kain untuk menyesuaikan interior Anda.",
+        icon: "palette",
+        image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=800",
+        cols: 2
+      }
     ]
   },
   {
@@ -295,16 +332,44 @@ export const STATIC_PRODUCTS: Product[] = [
     tag: "Populer",
     image: "/Samowa.webp",
     focus: "Fleksibilitas & Harga Terjangkau",
-    excerpt: "Partisi lipat fleksibel dengan harga terjangkau.",
-    content: "",
+    excerpt: "Partisi lipat fleksibel dengan harga terjangkau untuk ruang kelas dan kantor.",
+    content: "SAMOWA (Semi Moving Wall) adalah solusi cerdas untuk pembagian ruangan yang fleksibel dengan biaya yang lebih efisien. Sangat cocok untuk ruang kelas, kantor, tempat ibadah, dan restoran.",
     specs: [
-      { label: "Sistem", value: "Lipat Dorong" },
-      { label: "Rangka Besi", value: "Hollow 4 x 4" },
-      { label: "Material Peredam", value: "Glasswool 30kg/m³" },
-      { label: "Ketebalan Panel", value: "~6 cm" },
-      { label: "Material Panel", value: "Multiplek 9 mm" },
-      { label: "Sistem Rel", value: "Rel Atas & Bawah" },
-      { label: "Ideal Untuk", value: "Ruang Kelas, Kantor, Restoran" }
+      { label: "Sistem", value: "Lipat (Folding)" },
+      { label: "Tingkat Peredaman", value: "Medium Insulation" },
+      { label: "Rangka Konstruksi", value: "Hollow Besi 40x40 mm" },
+      { label: "Isian (Inner Material)", value: "Glasswool Density 30kg/m³" },
+      { label: "Ketebalan Panel", value: "80 mm" },
+      { label: "Panel Face", value: "Multiplek 9 mm" },
+      { label: "Mekanisme", value: "Engsel Kupu-kupu Heavy Duty" },
+      { label: "Sistem Rel", value: "Rel Atas & Rel Bawah (Tanam/Rata Lantai)" }
+    ],
+    bentoFeatures: [
+      {
+        title: "Sangat Ekonomis",
+        description: "Solusi partisi berkualitas dengan harga yang bersahabat untuk berbagai proyek.",
+        icon: "dollar-sign",
+        cols: 2
+      },
+      {
+        title: "Fleksibel",
+        description: "Mudah dioperasikan untuk membagi atau menggabungkan ruangan dalam sekejap.",
+        icon: "minimize",
+        cols: 1
+      },
+      {
+        title: "Rel Bawah Rata",
+        description: "Rel bawah ditanam rata dengan lantai sehingga aman dilalui.",
+        icon: "arrow-down",
+        cols: 1
+      },
+      {
+        title: "Semi Kedap Suara",
+        description: "Cukup mumpuni untuk mengurangi kebisingan antar ruangan standar.",
+        icon: "mic-off",
+        image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&q=80&w=800",
+        cols: 2
+      }
     ]
   },
   {
@@ -314,16 +379,56 @@ export const STATIC_PRODUCTS: Product[] = [
     tag: "Ekonomis",
     image: "/Nice Partisi.webp",
     focus: "Solusi Paling Ekonomis",
-    excerpt: "Partisi ekonomis untuk kebutuhan sekat ruangan sederhana.",
-    content: "",
+    excerpt: "Partisi praktis dan ekonomis untuk penyekat ruangan sederhana.",
+    content: "NICE PARTITION hadir sebagai jawaban untuk kebutuhan penyekat ruangan yang sederhana, cepat, dan murah. Pilihan tepat untuk garasi, penyekat ruang tamu, atau toko.",
     specs: [
       { label: "Sistem", value: "Lipat Dorong" },
-      { label: "Rangka Besi", value: "Hollow 4 x 4" },
-      { label: "Material Peredam", value: "Tanpa Peredam Khusus" },
-      { label: "Ketebalan Panel", value: "~6 cm" },
-      { label: "Material Panel", value: "Multiplek 6 mm" },
-      { label: "Sistem Rel", value: "Rel Atas & Bawah" },
-      { label: "Ideal Untuk", value: "Sekat Ruang Tamu, Ruang Ibadah" }
+      { label: "Rangka Besi", value: "Hollow Besi 40x40 mm" },
+      { label: "Isian", value: "Tanpa Peredam Khusus (Hollow)" },
+      { label: "Ketebalan Panel", value: "~60 mm" },
+      { label: "Panel Face", value: "Plywood 6 mm" },
+      { label: "Finishing", value: "HPL / Sheet Vinyl" },
+      { label: "Sistem Rel", value: "Rel Atas & Rel Bawah" }
+    ],
+    bentoFeatures: [
+      {
+        title: "Harga Terbaik",
+        description: "Opsi paling terjangkau di pasaran untuk kebutuhan partisi dasar.",
+        icon: "tag",
+        image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=800",
+        cols: 2
+      },
+      {
+        title: "Pemasangan Cepat",
+        description: "Waktu produksi dan instalasi yang sangat singkat.",
+        icon: "clock",
+        cols: 1
+      },
+      {
+        title: "Ringan",
+        description: "Mudah digeser dan tidak membebani struktur bangunan.",
+        icon: "feather",
+        cols: 1
+      },
+      {
+        title: "Desain Minimalis",
+        description: "Tampilan bersih dan modern yang cocok untuk berbagai interior.",
+        icon: "layout",
+        cols: 1
+      },
+      {
+        title: "Perawatan Mudah",
+        description: "Material yang mudah dibersihkan dan tahan lama.",
+        icon: "tool", // Using available/generic icon
+        cols: 1
+      },
+      {
+        title: "Custom Finishing",
+        description: "Pilihan lapisan HPL atau Vinyl sesuai selera Anda.",
+        icon: "palette",
+        image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=800",
+        cols: 2
+      }
     ]
   }
 ];
