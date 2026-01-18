@@ -7,13 +7,12 @@
 
 <div
     id="social-proof-container"
-    id="social-proof-container"
-    class="fixed top-24 left-4 md:top-28 md:left-8 z-[45] pointer-events-none max-w-[calc(100vw-2rem)] md:max-w-sm"
+    class="fixed top-24 left-4 md:top-auto md:bottom-8 md:left-8 z-[45] pointer-events-none max-w-[calc(100vw-2rem)] md:max-w-sm"
 >
     <!-- Notification Card (Hidden by default) -->
     <div
         id="notification-card"
-        class="bg-white rounded-xl shadow-2xl p-3 md:p-4 flex items-center gap-3 md:gap-4 transform -translate-y-20 opacity-0 transition-all duration-500 border border-slate-100"
+        class="bg-white rounded-xl shadow-2xl p-3 md:p-4 flex items-center gap-3 md:gap-4 transform scale-90 opacity-0 transition-all duration-500 border border-slate-100"
     >
         <div class="relative shrink-0">
             <div
@@ -112,12 +111,12 @@
 
         textEl.textContent = `${name} dari ${city} sedang ${action}`;
 
-        // Show (slide down)
-        card.classList.remove("-translate-y-20", "opacity-0");
+        // Show (fade in + scale up)
+        card.classList.remove("scale-90", "opacity-0");
 
-        // Hide after 5 seconds (slide up)
+        // Hide after 5 seconds (fade out + scale down)
         setTimeout(() => {
-            card.classList.add("-translate-y-20", "opacity-0");
+            card.classList.add("scale-90", "opacity-0");
         }, 5000);
     }
 
