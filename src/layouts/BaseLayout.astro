@@ -36,6 +36,11 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
+    <meta
+      name="google-site-verification"
+      content="XczM3ee8WGnLrrlCcfZiJ4Z3ppwNma69x6J9pI4jXPY"
+    />
+
     <!-- Canonical URL -->
     <link rel="canonical" href={canonicalUrl} />
 
@@ -45,6 +50,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={`${siteUrl}${image}`} />
+    <meta property="og:site_name" content="CV Pireki Asia" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />

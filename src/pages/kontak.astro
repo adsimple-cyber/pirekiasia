@@ -43,11 +43,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                         Kirim Pesan
                     </h2>
 
-                    <form
-                        action="https://formspree.io/f/your-form-id"
-                        method="POST"
-                        class="space-y-6"
-                    >
+                    <form id="contact-form" class="space-y-6">
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
                                 <label
@@ -167,7 +163,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                             type="submit"
                             class="inline-flex h-12 items-center justify-center rounded-md bg-[#072181] hover:bg-[#05165a] text-white font-bold text-sm uppercase tracking-wide px-8 transition-colors"
                         >
-                            Kirim Pesan
+                            Kirim Pesan via WhatsApp
                         </button>
                     </form>
                 </div>
@@ -359,3 +355,43 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         </div>
     </section>
 </BaseLayout>
+
+<script>
+    const form = document.getElementById("contact-form") as HTMLFormElement;
+
+    if (form) {
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const name = (document.getElementById("name") as HTMLInputElement)
+                .value;
+            const company = (
+                document.getElementById("company") as HTMLInputElement
+            ).value;
+            const email = (document.getElementById("email") as HTMLInputElement)
+                .value;
+            const phone = (document.getElementById("phone") as HTMLInputElement)
+                .value;
+            const product = (
+                document.getElementById("product") as HTMLSelectElement
+            ).value;
+            const message = (
+                document.getElementById("message") as HTMLTextAreaElement
+            ).value;
+
+            const text =
+                `Halo Admin Pireki Asia, saya ingin konsultasi:\n\n` +
+                `*Nama:* ${name}\n` +
+                `*Perusahaan:* ${company || "-"}\n` +
+                `*Email:* ${email}\n` +
+                `*No. HP:* ${phone}\n` +
+                `*Produk:* ${product}\n\n` +
+                `*Pesan:* ${message}`;
+
+            const encodedText = encodeURIComponent(text);
+            const whatsappUrl = `https://wa.me/6288231309760?text=${encodedText}`;
+
+            window.open(whatsappUrl, "_blank");
+        });
+    }
+</script>
