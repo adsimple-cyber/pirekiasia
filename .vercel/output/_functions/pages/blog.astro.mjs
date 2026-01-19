@@ -1,8 +1,8 @@
 import { e as createComponent, k as renderComponent, r as renderTemplate, m as maybeRenderHead } from '../chunks/astro/server_DCKeI3NF.mjs';
 import 'piccolore';
 import { $ as $$BaseLayout } from '../chunks/BaseLayout_CpCs8XBY.mjs';
-import { $ as $$BlogCard } from '../chunks/BlogCard_C3U5WfI-.mjs';
-import { a as fetchPosts, S as STATIC_POSTS } from '../chunks/wordpress_Jj2B-W0L.mjs';
+import { $ as $$BlogCard } from '../chunks/BlogCard_CNnnqQtA.mjs';
+import { a as fetchPosts, S as STATIC_POSTS } from '../chunks/wordpress_B-VFfZ0-.mjs';
 export { renderers } from '../renderers.mjs';
 
 const prerender = false;

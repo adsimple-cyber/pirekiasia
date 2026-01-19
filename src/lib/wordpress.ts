@@ -68,6 +68,7 @@ export interface MediaItem {
  * Strip HTML tags from string
  */
 function stripHtml(html: string): string {
+  if (!html) return '';
   return html.replace(/<[^>]*>/g, '').trim();
 }
 
@@ -75,12 +76,21 @@ function stripHtml(html: string): string {
  * Format date to Indonesian locale
  */
 export function formatDate(dateString: string): string {
-  const date = new Date(dateString);
-  return date.toLocaleDateString('id-ID', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric'
-  });
+  if (!dateString) return '';
+  try {
+    const date = new Date(dateString);
+    // Check if date is valid
+    if (isNaN(date.getTime())) return dateString;
+
+    return date.toLocaleDateString('id-ID', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric'
+    });
+  } catch (e) {
+    console.error('[WordPress API] Date format error:', e);
+    return dateString || '';
+  }
 }
 
 /**
@@ -207,16 +217,23 @@ export async function fetchPosts(limit: number = 10): Promise<Post[]> {
 
   if (!data) return [];
 
-  return data.map(item => ({
-    id: item.id,
-    title: stripHtml(item.title.rendered),
-    slug: item.slug,
-    date: item.date,
-    excerpt: stripHtml(item.excerpt.rendered),
-    content: item.content.rendered,
-    image: item._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/slide1.webp',
-    categories: item.categories
-  }));
+  return data.map(item => {
+    try {
+      return {
+        id: item.id,
+        title: item.title?.rendered ? stripHtml(item.title.rendered) : 'Untitled',
+        slug: item.slug,
+        date: item.date,
+        excerpt: item.excerpt?.rendered ? stripHtml(item.excerpt.rendered) : '',
+        content: item.content?.rendered || '',
+        image: item._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/slide1.webp',
+        categories: item.categories || []
+      };
+    } catch (err) {
+      console.error('[WordPress API] Error mapping post:', err);
+      return null;
+    }
+  }).filter(item => item !== null) as Post[];
 }
 
 /**
@@ -228,16 +245,21 @@ export async function fetchPostBySlug(slug: string): Promise<Post | null> {
   if (!data || data.length === 0) return null;
 
   const item = data[0];
-  return {
-    id: item.id,
-    title: stripHtml(item.title.rendered),
-    slug: item.slug,
-    date: item.date,
-    excerpt: stripHtml(item.excerpt.rendered),
-    content: item.content.rendered,
-    image: item._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/slide1.webp',
-    categories: item.categories
-  };
+  try {
+    return {
+      id: item.id,
+      title: item.title?.rendered ? stripHtml(item.title.rendered) : 'Untitled',
+      slug: item.slug,
+      date: item.date,
+      excerpt: item.excerpt?.rendered ? stripHtml(item.excerpt.rendered) : '',
+      content: item.content?.rendered || '',
+      image: item._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/slide1.webp',
+      categories: item.categories || []
+    };
+  } catch (err) {
+    console.error('[WordPress API] Error mapping single post:', err);
+    return null;
+  }
 }
 
 /**

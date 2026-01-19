@@ -3,7 +3,7 @@ import 'piccolore';
 import { $ as $$BaseLayout } from '../chunks/BaseLayout_CpCs8XBY.mjs';
 import { $ as $$ProductCard } from '../chunks/ProductCard_BHuWd5Cn.mjs';
 import { $ as $$CTA } from '../chunks/CTA_AsLQ_FIB.mjs';
-import { e as fetchProducts, d as STATIC_PRODUCTS } from '../chunks/wordpress_Jj2B-W0L.mjs';
+import { e as fetchProducts, d as STATIC_PRODUCTS } from '../chunks/wordpress_B-VFfZ0-.mjs';
 export { renderers } from '../renderers.mjs';
 
 const $$Index = createComponent(async ($$result, $$props, $$slots) => {

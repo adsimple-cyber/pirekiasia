@@ -4,9 +4,9 @@ import { $ as $$BaseLayout } from '../chunks/BaseLayout_CpCs8XBY.mjs';
 import 'clsx';
 /* empty css                                 */
 import { $ as $$ProductCard } from '../chunks/ProductCard_BHuWd5Cn.mjs';
-import { $ as $$BlogCard } from '../chunks/BlogCard_C3U5WfI-.mjs';
+import { $ as $$BlogCard } from '../chunks/BlogCard_CNnnqQtA.mjs';
 import { $ as $$CTA } from '../chunks/CTA_AsLQ_FIB.mjs';
-import { e as fetchProducts, a as fetchPosts, d as STATIC_PRODUCTS, S as STATIC_POSTS } from '../chunks/wordpress_Jj2B-W0L.mjs';
+import { e as fetchProducts, a as fetchPosts, d as STATIC_PRODUCTS, S as STATIC_POSTS } from '../chunks/wordpress_B-VFfZ0-.mjs';
 export { renderers } from '../renderers.mjs';
 
 const $$Hero = createComponent(($$result, $$props, $$slots) => {

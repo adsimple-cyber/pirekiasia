@@ -15,16 +15,26 @@ import {
 export const prerender = false;
 
 const { slug } = Astro.params;
-let post = await fetchPostBySlug(slug as string);
+let post;
 
-if (!post) {
-    const fallback = STATIC_POSTS.find((p) => p.slug === slug);
-    if (fallback) {
-        post = fallback;
+try {
+    console.log(`[SSR] Rendering post: ${slug}`);
+    post = await fetchPostBySlug(slug as string);
+
+    if (!post) {
+        console.warn(
+            `[SSR] Post not found via API: ${slug}, checking fallback...`,
+        );
+        post = STATIC_POSTS.find((p) => p.slug === slug);
     }
+} catch (e) {
+    console.error(`[SSR] Error in [slug].astro for ${slug}:`, e);
+    // Attempt fallback one last time
+    post = STATIC_POSTS.find((p) => p.slug === slug);
 }
 
 if (!post) {
+    console.warn(`[SSR] Post absolutely not found: ${slug}`);
     return Astro.redirect("/404");
 }
 

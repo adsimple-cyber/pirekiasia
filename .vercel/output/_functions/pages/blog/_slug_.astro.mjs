@@ -1,8 +1,8 @@
 import { e as createComponent, f as createAstro, k as renderComponent, r as renderTemplate, m as maybeRenderHead, h as addAttribute, u as unescapeHTML } from '../../chunks/astro/server_DCKeI3NF.mjs';
 import 'piccolore';
 import { $ as $$BaseLayout } from '../../chunks/BaseLayout_CpCs8XBY.mjs';
-import { $ as $$BlogCard } from '../../chunks/BlogCard_C3U5WfI-.mjs';
-import { f as fetchPostBySlug, S as STATIC_POSTS, a as fetchPosts, b as formatDate } from '../../chunks/wordpress_Jj2B-W0L.mjs';
+import { $ as $$BlogCard } from '../../chunks/BlogCard_CNnnqQtA.mjs';
+import { f as fetchPostBySlug, S as STATIC_POSTS, a as fetchPosts, b as formatDate } from '../../chunks/wordpress_B-VFfZ0-.mjs';
 export { renderers } from '../../renderers.mjs';
 
 const $$Astro = createAstro();
@@ -11,14 +11,22 @@ const $$slug = createComponent(async ($$result, $$props, $$slots) => {
   const Astro2 = $$result.createAstro($$Astro, $$props, $$slots);
   Astro2.self = $$slug;
   const { slug } = Astro2.params;
-  let post = await fetchPostBySlug(slug);
-  if (!post) {
-    const fallback = STATIC_POSTS.find((p) => p.slug === slug);
-    if (fallback) {
-      post = fallback;
+  let post;
+  try {
+    console.log(`[SSR] Rendering post: ${slug}`);
+    post = await fetchPostBySlug(slug);
+    if (!post) {
+      console.warn(
+        `[SSR] Post not found via API: ${slug}, checking fallback...`
+      );
+      post = STATIC_POSTS.find((p) => p.slug === slug);
     }
+  } catch (e) {
+    console.error(`[SSR] Error in [slug].astro for ${slug}:`, e);
+    post = STATIC_POSTS.find((p) => p.slug === slug);
   }
   if (!post) {
+    console.warn(`[SSR] Post absolutely not found: ${slug}`);
     return Astro2.redirect("/404");
   }
   let allPosts = await fetchPosts(6);

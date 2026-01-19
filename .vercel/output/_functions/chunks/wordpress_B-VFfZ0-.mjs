@@ -1,14 +1,22 @@
 const API_URL = "https://partisi.cvpirekiasia.com/wp-json/wp/v2";
 function stripHtml(html) {
+  if (!html) return "";
   return html.replace(/<[^>]*>/g, "").trim();
 }
 function formatDate(dateString) {
-  const date = new Date(dateString);
-  return date.toLocaleDateString("id-ID", {
-    day: "numeric",
-    month: "short",
-    year: "numeric"
-  });
+  if (!dateString) return "";
+  try {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return dateString;
+    return date.toLocaleDateString("id-ID", {
+      day: "numeric",
+      month: "short",
+      year: "numeric"
+    });
+  } catch (e) {
+    console.error("[WordPress API] Date format error:", e);
+    return dateString || "";
+  }
 }
 async function fetchAPI(endpoint) {
   try {
@@ -68,31 +76,43 @@ async function fetchProductBySlug(slug) {
 async function fetchPosts(limit = 10) {
   const data = await fetchAPI(`/posts?per_page=${limit}&_embed`);
   if (!data) return [];
-  return data.map((item) => ({
-    id: item.id,
-    title: stripHtml(item.title.rendered),
-    slug: item.slug,
-    date: item.date,
-    excerpt: stripHtml(item.excerpt.rendered),
-    content: item.content.rendered,
-    image: item._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "/slide1.webp",
-    categories: item.categories
-  }));
+  return data.map((item) => {
+    try {
+      return {
+        id: item.id,
+        title: item.title?.rendered ? stripHtml(item.title.rendered) : "Untitled",
+        slug: item.slug,
+        date: item.date,
+        excerpt: item.excerpt?.rendered ? stripHtml(item.excerpt.rendered) : "",
+        content: item.content?.rendered || "",
+        image: item._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "/slide1.webp",
+        categories: item.categories || []
+      };
+    } catch (err) {
+      console.error("[WordPress API] Error mapping post:", err);
+      return null;
+    }
+  }).filter((item) => item !== null);
 }
 async function fetchPostBySlug(slug) {
   const data = await fetchAPI(`/posts?slug=${slug}&_embed`);
   if (!data || data.length === 0) return null;
   const item = data[0];
-  return {
-    id: item.id,
-    title: stripHtml(item.title.rendered),
-    slug: item.slug,
-    date: item.date,
-    excerpt: stripHtml(item.excerpt.rendered),
-    content: item.content.rendered,
-    image: item._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "/slide1.webp",
-    categories: item.categories
-  };
+  try {
+    return {
+      id: item.id,
+      title: item.title?.rendered ? stripHtml(item.title.rendered) : "Untitled",
+      slug: item.slug,
+      date: item.date,
+      excerpt: item.excerpt?.rendered ? stripHtml(item.excerpt.rendered) : "",
+      content: item.content?.rendered || "",
+      image: item._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "/slide1.webp",
+      categories: item.categories || []
+    };
+  } catch (err) {
+    console.error("[WordPress API] Error mapping single post:", err);
+    return null;
+  }
 }
 const STATIC_PRODUCTS = [
   {
