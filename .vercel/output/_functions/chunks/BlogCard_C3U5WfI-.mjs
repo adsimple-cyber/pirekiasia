@@ -1,7 +1,7 @@
 import { e as createComponent, f as createAstro, m as maybeRenderHead, h as addAttribute, r as renderTemplate } from './astro/server_DCKeI3NF.mjs';
 import 'piccolore';
 import 'clsx';
-import { b as formatDate } from './wordpress_vfo1_j38.mjs';
+import { b as formatDate } from './wordpress_Jj2B-W0L.mjs';
 
 const $$Astro = createAstro();
 const $$BlogCard = createComponent(($$result, $$props, $$slots) => {

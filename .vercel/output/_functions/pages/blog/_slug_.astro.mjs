@@ -1,8 +1,8 @@
 import { e as createComponent, f as createAstro, k as renderComponent, r as renderTemplate, m as maybeRenderHead, h as addAttribute, u as unescapeHTML } from '../../chunks/astro/server_DCKeI3NF.mjs';
 import 'piccolore';
 import { $ as $$BaseLayout } from '../../chunks/BaseLayout_CpCs8XBY.mjs';
-import { $ as $$BlogCard } from '../../chunks/BlogCard_C3610OCo.mjs';
-import { f as fetchPostBySlug, S as STATIC_POSTS, a as fetchPosts, b as formatDate } from '../../chunks/wordpress_vfo1_j38.mjs';
+import { $ as $$BlogCard } from '../../chunks/BlogCard_C3U5WfI-.mjs';
+import { f as fetchPostBySlug, S as STATIC_POSTS, a as fetchPosts, b as formatDate } from '../../chunks/wordpress_Jj2B-W0L.mjs';
 export { renderers } from '../../renderers.mjs';
 
 const $$Astro = createAstro();

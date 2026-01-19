@@ -88,16 +88,21 @@ export function formatDate(dateString: string): string {
  */
 async function fetchAPI<T>(endpoint: string): Promise<T | null> {
   try {
-    const response = await fetch(`${API_URL}${endpoint}`);
+    console.log(`[WordPress API] Fetching: ${API_URL}${endpoint}`);
+    const res = await fetch(`${API_URL}${endpoint}`);
 
-    if (!response.ok) {
-      console.error(`API Error: ${response.status} ${response.statusText}`);
+    if (!res.ok) {
+      console.error(`[WordPress API] Error ${res.status}: ${res.statusText}`);
+      console.error(`[WordPress API] URL: ${API_URL}${endpoint}`);
+      const text = await res.text();
+      console.error(`[WordPress API] Response: ${text.slice(0, 500)}`);
       return null;
     }
 
-    return await response.json() as T;
+    const data = await res.json();
+    return data as T;
   } catch (error) {
-    console.error('Fetch error:', error);
+    console.error('[WordPress API] Fetch error:', error);
     return null;
   }
 }
