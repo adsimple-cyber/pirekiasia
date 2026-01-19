@@ -1,227 +1,82 @@
-/**
- * WordPress REST API Helper Library
- * For CV Pireki Asia - Headless CMS Integration
- */
-
-// API Base URL from environment variable
-const API_URL = import.meta.env.WORDPRESS_API_URL || 'https://partisi.cvpirekiasia.com/wp-json/wp/v2';
-
-// ============================================
-// TYPE DEFINITIONS
-// ============================================
-
-export interface ProductSpec {
-  label: string;
-  value: string;
+const API_URL = "https://partisi.cvpirekiasia.com/wp-json/wp/v2";
+function stripHtml(html) {
+  return html.replace(/<[^>]*>/g, "").trim();
 }
-
-export interface Product {
-  id: number;
-  title: string;
-  slug: string;
-  image: string;
-  tag: string;
-  focus: string;
-  excerpt: string;
-  content: string;
-  specs: ProductSpec[];
-  bentoFeatures?: {
-    title: string;
-    description: string;
-    icon: string; // Lucide icon name
-    image?: string;
-    cols?: number; // 1 or 2
-  }[];
-}
-
-export interface Post {
-  id: number;
-  title: string;
-  slug: string;
-  date: string;
-  excerpt: string;
-  content: string;
-  image: string;
-  categories: number[];
-}
-
-export interface Page {
-  id: number;
-  title: string;
-  slug: string;
-  content: string;
-}
-
-export interface MediaItem {
-  id: number;
-  url: string;
-  alt: string;
-  width: number;
-  height: number;
-}
-
-// ============================================
-// HELPER FUNCTIONS
-// ============================================
-
-/**
- * Strip HTML tags from string
- */
-function stripHtml(html: string): string {
-  return html.replace(/<[^>]*>/g, '').trim();
-}
-
-/**
- * Format date to Indonesian locale
- */
-export function formatDate(dateString: string): string {
+function formatDate(dateString) {
   const date = new Date(dateString);
-  return date.toLocaleDateString('id-ID', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric'
+  return date.toLocaleDateString("id-ID", {
+    day: "numeric",
+    month: "short",
+    year: "numeric"
   });
 }
-
-/**
- * Generic fetch wrapper with error handling
- */
-async function fetchAPI<T>(endpoint: string): Promise<T | null> {
+async function fetchAPI(endpoint) {
   try {
     const response = await fetch(`${API_URL}${endpoint}`);
-
     if (!response.ok) {
       console.error(`API Error: ${response.status} ${response.statusText}`);
       return null;
     }
-
-    return await response.json() as T;
+    return await response.json();
   } catch (error) {
-    console.error('Fetch error:', error);
+    console.error("Fetch error:", error);
     return null;
   }
 }
-
-// ============================================
-// PRODUCTS API
-// ============================================
-
-interface WPProduct {
-  id: number;
-  title: { rendered: string };
-  slug: string;
-  excerpt: { rendered: string };
-  content: { rendered: string };
-  featured_media: number;
-  acf?: {
-    tag?: string;
-    focus?: string;
-    specs?: ProductSpec[];
-  };
-  _embedded?: {
-    'wp:featuredmedia'?: Array<{ source_url: string }>;
-  };
-}
-
-/**
- * Fetch all products from WordPress
- * Expects a custom post type 'produk' or uses 'posts' with category filter
- */
-export async function fetchProducts(limit: number = 10): Promise<Product[]> {
-  // Try custom post type first, fallback to posts
-  let data = await fetchAPI<WPProduct[]>(`/produk?per_page=${limit}&_embed`);
-
+async function fetchProducts(limit = 10) {
+  let data = await fetchAPI(`/produk?per_page=${limit}&_embed`);
   if (!data) {
-    // Fallback to posts with product category
-    data = await fetchAPI<WPProduct[]>(`/posts?per_page=${limit}&_embed&categories=produk`);
+    data = await fetchAPI(`/posts?per_page=${limit}&_embed&categories=produk`);
   }
-
   if (!data) return [];
-
-  return data.map(item => ({
+  return data.map((item) => ({
     id: item.id,
     title: stripHtml(item.title.rendered),
     slug: item.slug,
-    image: item._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/slide1.webp',
-    tag: item.acf?.tag || 'Produk',
-    focus: item.acf?.focus || '',
+    image: item._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "/slide1.webp",
+    tag: item.acf?.tag || "Produk",
+    focus: item.acf?.focus || "",
     excerpt: stripHtml(item.excerpt.rendered),
     content: item.content.rendered,
     specs: item.acf?.specs || []
   }));
 }
-
-/**
- * Fetch single product by slug
- */
-export async function fetchProductBySlug(slug: string): Promise<Product | null> {
-  let data = await fetchAPI<WPProduct[]>(`/produk?slug=${slug}&_embed`);
-
+async function fetchProductBySlug(slug) {
+  let data = await fetchAPI(`/produk?slug=${slug}&_embed`);
   if (!data || data.length === 0) {
-    data = await fetchAPI<WPProduct[]>(`/posts?slug=${slug}&_embed`);
+    data = await fetchAPI(`/posts?slug=${slug}&_embed`);
   }
-
   if (!data || data.length === 0) return null;
-
   const item = data[0];
   return {
     id: item.id,
     title: stripHtml(item.title.rendered),
     slug: item.slug,
-    image: item._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/slide1.webp',
-    tag: item.acf?.tag || 'Produk',
-    focus: item.acf?.focus || '',
+    image: item._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "/slide1.webp",
+    tag: item.acf?.tag || "Produk",
+    focus: item.acf?.focus || "",
     excerpt: stripHtml(item.excerpt.rendered),
     content: item.content.rendered,
     specs: item.acf?.specs || []
   };
 }
-
-// ============================================
-// BLOG POSTS API
-// ============================================
-
-interface WPPost {
-  id: number;
-  title: { rendered: string };
-  slug: string;
-  date: string;
-  excerpt: { rendered: string };
-  content: { rendered: string };
-  categories: number[];
-  _embedded?: {
-    'wp:featuredmedia'?: Array<{ source_url: string }>;
-  };
-}
-
-/**
- * Fetch blog posts
- */
-export async function fetchPosts(limit: number = 10): Promise<Post[]> {
-  const data = await fetchAPI<WPPost[]>(`/posts?per_page=${limit}&_embed`);
-
+async function fetchPosts(limit = 10) {
+  const data = await fetchAPI(`/posts?per_page=${limit}&_embed`);
   if (!data) return [];
-
-  return data.map(item => ({
+  return data.map((item) => ({
     id: item.id,
     title: stripHtml(item.title.rendered),
     slug: item.slug,
     date: item.date,
     excerpt: stripHtml(item.excerpt.rendered),
     content: item.content.rendered,
-    image: item._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/slide1.webp',
+    image: item._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "/slide1.webp",
     categories: item.categories
   }));
 }
-
-/**
- * Fetch single post by slug
- */
-export async function fetchPostBySlug(slug: string): Promise<Post | null> {
-  const data = await fetchAPI<WPPost[]>(`/posts?slug=${slug}&_embed`);
-
+async function fetchPostBySlug(slug) {
+  const data = await fetchAPI(`/posts?slug=${slug}&_embed`);
   if (!data || data.length === 0) return null;
-
   const item = data[0];
   return {
     id: item.id,
@@ -230,52 +85,11 @@ export async function fetchPostBySlug(slug: string): Promise<Post | null> {
     date: item.date,
     excerpt: stripHtml(item.excerpt.rendered),
     content: item.content.rendered,
-    image: item._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/slide1.webp',
+    image: item._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "/slide1.webp",
     categories: item.categories
   };
 }
-
-/**
- * Fetch all post slugs for static generation
- */
-export async function fetchAllPostSlugs(): Promise<string[]> {
-  const data = await fetchAPI<WPPost[]>(`/posts?per_page=100&_fields=slug`);
-  return data ? data.map(item => item.slug) : [];
-}
-
-// ============================================
-// PAGES API
-// ============================================
-
-interface WPPage {
-  id: number;
-  title: { rendered: string };
-  slug: string;
-  content: { rendered: string };
-}
-
-/**
- * Fetch page by slug
- */
-export async function fetchPageBySlug(slug: string): Promise<Page | null> {
-  const data = await fetchAPI<WPPage[]>(`/pages?slug=${slug}`);
-
-  if (!data || data.length === 0) return null;
-
-  const item = data[0];
-  return {
-    id: item.id,
-    title: stripHtml(item.title.rendered),
-    slug: item.slug,
-    content: item.content.rendered
-  };
-}
-
-// ============================================
-// STATIC DATA (Fallback when API is unavailable)
-// ============================================
-
-export const STATIC_PRODUCTS: Product[] & { bentoFeatures?: any[] } = [
+const STATIC_PRODUCTS = [
   {
     id: 1,
     title: "SOREPA",
@@ -419,7 +233,8 @@ export const STATIC_PRODUCTS: Product[] & { bentoFeatures?: any[] } = [
       {
         title: "Perawatan Mudah",
         description: "Material yang mudah dibersihkan dan tahan lama.",
-        icon: "tool", // Using available/generic icon
+        icon: "tool",
+        // Using available/generic icon
         cols: 1
       },
       {
@@ -432,8 +247,7 @@ export const STATIC_PRODUCTS: Product[] & { bentoFeatures?: any[] } = [
     ]
   }
 ];
-
-export const STATIC_POSTS: Post[] = [
+const STATIC_POSTS = [
   {
     id: 1,
     title: "Tips Memilih Partisi Ruangan yang Tepat",
@@ -465,3 +279,5 @@ export const STATIC_POSTS: Post[] = [
     categories: []
   }
 ];
+
+export { STATIC_POSTS as S, fetchPosts as a, formatDate as b, fetchProductBySlug as c, STATIC_PRODUCTS as d, fetchProducts as e, fetchPostBySlug as f };

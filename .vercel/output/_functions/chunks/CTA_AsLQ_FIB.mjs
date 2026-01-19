@@ -1,0 +1,18 @@
+import { e as createComponent, m as maybeRenderHead, r as renderTemplate } from './astro/server_DCKeI3NF.mjs';
+import 'piccolore';
+import 'clsx';
+
+const $$CTA = createComponent(($$result, $$props, $$slots) => {
+  return renderTemplate`${maybeRenderHead()}<section class="pt-32 pb-16 bg-white border-t border-gray-100"> <div class="container mx-auto px-4 md:px-6"> <div class="relative"> <!-- Architect Image - Head extends above card, body aligns with bottom --> <div class="absolute right-8 lg:right-20 bottom-0 z-20 hidden lg:block"> <img src="/female.png" alt="Konsultan Pireki Asia" class="h-[420px] w-auto object-contain drop-shadow-2xl"> </div> <!-- Blue Card - Shorter height --> <div class="bg-[#072181] rounded-2xl p-8 md:p-10 lg:py-12 lg:px-14 text-white relative overflow-visible shadow-2xl"> <!-- Decorative Blobs --> <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2"></div> <div class="absolute bottom-0 left-0 w-64 h-64 bg-yellow-500/10 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2"></div> <!-- Content - Smaller --> <div class="relative z-10 max-w-lg"> <h2 class="text-2xl md:text-3xl font-bold mb-4 tracking-tight">
+Siap Meningkatkan Fungsionalitas Ruangan Anda?
+</h2> <p class="text-slate-300 text-sm md:text-base mb-6 leading-relaxed">
+Hubungi tim ahli kami untuk konsultasi teknis,
+                        pengukuran lokasi, dan penawaran harga terbaik.
+</p> <!-- Buttons - Smaller --> <div class="flex flex-col sm:flex-row gap-3"> <a href="/kontak" class="inline-flex h-10 items-center justify-center rounded-md bg-white text-[#072181] hover:bg-slate-100 font-bold text-xs uppercase tracking-wide px-6 transition-colors">
+Hubungi Kami
+</a> <a href="https://wa.me/6288231309760?text=Halo%2C%20saya%20tertarik%20dengan%20produk%20partisi%20Pireki%20Asia." target="_blank" rel="noopener noreferrer" class="inline-flex h-10 items-center justify-center rounded-md bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-xs uppercase tracking-wide px-6 gap-2 transition-colors"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path> </svg>
+WhatsApp
+</a> </div> </div> </div> </div> </div> </section>`;
+}, "C:/Users/Administrator/Documents/Porto/cvpireki/pirekiasia/src/components/CTA.astro", void 0);
+
+export { $$CTA as $ };
