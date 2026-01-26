@@ -216,4 +216,12 @@ const relatedPosts = allPosts.filter((p) => p.slug !== slug).slice(0, 3);
             </section>
         )
     }
+    <style>
+        /* Center images in article content */
+        .prose img {
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+    </style>
 </BaseLayout>
