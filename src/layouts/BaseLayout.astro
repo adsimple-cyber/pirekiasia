@@ -10,6 +10,12 @@ import WhatsAppFAB from "../components/WhatsAppFAB.astro";
 import SocialProof from "../components/SocialProof.astro";
 import AnimatedBackground from "../components/AnimatedBackground.astro";
 
+// Supports weights 100-900
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/600.css";
+import "@fontsource/inter/700.css";
+import "@fontsource/inter/800.css";
+
 interface Props {
   title: string;
   description?: string;
@@ -33,9 +39,13 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
 
+    <!-- Preconnect to critical origins -->
+    <link rel="dns-prefetch" href="https://www.youtube.com" />
+    <link rel="dns-prefetch" href="https://images.unsplash.com" />
+
     <!-- Critical CSS for LCP (Hero H1) - Inline for immediate render -->
     <style is:inline>
-      /* Critical font fallback */
+      /* Critical font fallback - prevents FOIT */
       body {
         font-family:
           "Inter",
@@ -44,9 +54,11 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
           "Segoe UI",
           Roboto,
           sans-serif;
+        margin: 0;
+        background-color: #f8fafc;
       }
 
-      /* Hero section critical styles */
+      /* Hero section critical styles - LCP optimization */
       .hero-h1 {
         font-size: 2.25rem;
         font-weight: 800;
@@ -59,6 +71,30 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
         .hero-h1 {
           font-size: 3.75rem;
         }
+      }
+
+      /* Critical layout CSS to prevent layout shift */
+      .container {
+        width: 100%;
+        max-width: 1280px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+
+      /* Navbar placeholder to prevent CLS */
+      #navbar {
+        position: fixed;
+        width: 100%;
+        z-index: 50;
+        padding: 1rem 0;
+      }
+
+      /* Hero bg color to reduce perceived load time */
+      section:first-of-type {
+        background-color: #072181;
+        min-height: 100vh;
       }
     </style>
 
@@ -87,25 +123,6 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={`${siteUrl}${image}`} />
-
-    <!-- Google Fonts - Inter (Optimized) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-    <!-- Preload critical font weights -->
-    <link
-      rel="preload"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
-      as="style"
-      onload="this.onload=null;this.rel='stylesheet'"
-    />
-    <!-- Fallback for no-JS -->
-    <noscript>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
-        rel="stylesheet"
-      />
-    </noscript>
 
     <title>{title} | CV Pireki Asia</title>
 

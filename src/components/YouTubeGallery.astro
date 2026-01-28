@@ -39,17 +39,27 @@ const videos = [
         <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {videos.map((video) => (
                 <div class="group relative bg-slate-100 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                    <!-- YouTube Embed with Lazy Loading -->
-                    <div class="aspect-video">
-                        <iframe
-                            src={`https://www.youtube.com/embed/${video.id}`}
-                            title={video.title}
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen
+                    <!-- YouTube Facade (Lightweight) -->
+                    <div class="aspect-video relative youtube-facade" data-id={video.id} data-title={video.title}>
+                        <!-- Thumbnail (WebP High Res) -->
+                        <img 
+                            src={`https://i.ytimg.com/vi_webp/${video.id}/maxresdefault.webp`}
+                            alt={video.title}
+                            class="w-full h-full object-cover cursor-pointer hover:opacity-90 transition-opacity"
                             loading="lazy"
-                            class="w-full h-full"
-                        ></iframe>
+                        />
+                        
+                        <!-- Play Button Overlay -->
+                        <button 
+                            class="absolute inset-0 flex items-center justify-center group/btn focus:outline-none"
+                            aria-label={`Play ${video.title}`}
+                        >
+                            <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center shadow-lg group-hover/btn:bg-red-700 group-hover/btn:scale-110 transition-all duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="white" class="ml-1">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                            </div>
+                        </button>
                     </div>
                     
                     <!-- Video Title Overlay -->
@@ -61,6 +71,40 @@ const videos = [
                 </div>
             ))}
         </div>
+
+        <script>
+            // Handle YouTube Facade Click
+            document.addEventListener('DOMContentLoaded', () => {
+                const facades = document.querySelectorAll('.youtube-facade');
+                
+                facades.forEach(facade => {
+                    const button = facade.querySelector('button');
+                    const img = facade.querySelector('img');
+                    
+                    // Add click listeners to both button and container
+                    const loadVideo = () => {
+                        const videoId = facade.getAttribute('data-id');
+                        const videoTitle = facade.getAttribute('data-title');
+                        
+                        // Create iframe
+                        const iframe = document.createElement('iframe');
+                        iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+                        iframe.title = videoTitle || 'YouTube video';
+                        iframe.frameBorder = '0';
+                        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+                        iframe.allowFullscreen = true;
+                        iframe.className = 'w-full h-full absolute inset-0';
+                        
+                        // Replace content
+                        facade.innerHTML = '';
+                        facade.appendChild(iframe);
+                    };
+
+                    button?.addEventListener('click', loadVideo);
+                    img?.addEventListener('click', loadVideo);
+                });
+            });
+        </script>
 
         <!-- CTA -->
         <div class="text-center mt-10">
