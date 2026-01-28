@@ -313,20 +313,20 @@ export const STATIC_PRODUCTS: Product[] & { bentoFeatures?: any[] } = [
     excerpt: "Partisi geser premium dengan peredaman suara terbaik di kelasnya.",
     content: "SOREPA (Sound Reduce Partition) adalah produk unggulan CV Pireki Asia yang dirancang khusus untuk memenuhi kebutuhan ruangan dengan insulasi suara tinggi. Ideal untuk Ballroom hotel, ruang meeting, auditorium, dan ruang kelas yang membutuhkan ketenangan maksimal.",
     specs: [
-      { label: "Sistem", value: "Sliding per Section (Geser per panel)" },
-      { label: "Tingkat Peredaman", value: "STC 45 - STC 55 (High Insulation)" },
-      { label: "Rangka Konstruksi", value: "Hollow Besi 50x50 mm + Profil Aluminium Anodized" },
-      { label: "Isian (Inner Material)", value: "Rockwool Density 60-100kg/m³ + Paper Honeycomb" },
-      { label: "Ketebalan Panel", value: "100 mm" },
-      { label: "Panel Face", value: "MDF / Multiplek 12 mm" },
-      { label: "Finishing", value: "HPL, Wallpaper, Kain Cosglow / Ateja" },
-      { label: "Mekanisme", value: "Jack Mechanism (Atas & Bawah)" },
-      { label: "Sistem Rel", value: "Rel Gantung Aluminium (Tanpa Rel Bawah)" }
+      { label: "Frame", value: "Frame Hollow Besi 5 x 5" },
+      { label: "Profil", value: "Profil Aluminium Anodized" },
+      { label: "Panel", value: "Multiplek 9 mm" },
+      { label: "Peredam", value: "Rockwool 60 Kg/m³" },
+      { label: "Rubber", value: "Rubber Sheet" },
+      { label: "Cotton", value: "Cotton Sheet 5 mm" },
+      { label: "Mekanisme", value: "Mechanic Contact Device" },
+      { label: "Roda", value: "Roda Teflon" },
+      { label: "Rel", value: "Rel Aluminium" }
     ],
     bentoFeatures: [
       {
         title: "High Sound Insulation",
-        description: "Mampu meredam suara hingga 55 dB, setara dengan studio rekaman profesional.",
+        description: "Mampu meredam suara secara optimal, setara dengan studio rekaman profesional.",
         icon: "volume-x",
         image: "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&q=80&w=800",
         cols: 2
@@ -362,14 +362,14 @@ export const STATIC_PRODUCTS: Product[] & { bentoFeatures?: any[] } = [
     excerpt: "Partisi lipat fleksibel dengan harga terjangkau untuk ruang kelas dan kantor.",
     content: "SAMOWA (Semi Moving Wall) adalah solusi cerdas untuk pembagian ruangan yang fleksibel dengan biaya yang lebih efisien. Sangat cocok untuk ruang kelas, kantor, tempat ibadah, dan restoran.",
     specs: [
-      { label: "Sistem", value: "Lipat (Folding)" },
-      { label: "Tingkat Peredaman", value: "Medium Insulation" },
-      { label: "Rangka Konstruksi", value: "Hollow Besi 40x40 mm" },
-      { label: "Isian (Inner Material)", value: "Glasswool Density 30kg/m³" },
-      { label: "Ketebalan Panel", value: "80 mm" },
-      { label: "Panel Face", value: "Multiplek 9 mm" },
-      { label: "Mekanisme", value: "Engsel Kupu-kupu Heavy Duty" },
-      { label: "Sistem Rel", value: "Rel Atas & Rel Bawah (Tanam/Rata Lantai)" }
+      { label: "Frame", value: "Frame Hollow Besi 4 x 4" },
+      { label: "Isian", value: "Meranti Wood Inside" },
+      { label: "Panel", value: "Multiplek 9 mm" },
+      { label: "Peredam", value: "Glasswool 30 Kg/m³" },
+      { label: "Sistem Rel", value: "Sistem Rel Atas dan Bawah" },
+      { label: "Sistem", value: "Sistem Lipat" },
+      { label: "Kunci", value: "Grendel Tanam" },
+      { label: "Finishing", value: "Finishing HPL, Kain & Wallpaper" }
     ],
     bentoFeatures: [
       {
@@ -391,7 +391,7 @@ export const STATIC_PRODUCTS: Product[] & { bentoFeatures?: any[] } = [
         cols: 1
       },
       {
-        title: "Semi Kedap Suara",
+        title: "Semi Redam Suara",
         description: "Cukup mumpuni untuk mengurangi kebisingan antar ruangan standar.",
         icon: "mic-off",
         image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&q=80&w=800",
@@ -409,13 +409,13 @@ export const STATIC_PRODUCTS: Product[] & { bentoFeatures?: any[] } = [
     excerpt: "Partisi praktis dan ekonomis untuk penyekat ruangan sederhana.",
     content: "NICE PARTITION hadir sebagai jawaban untuk kebutuhan penyekat ruangan yang sederhana, cepat, dan murah. Pilihan tepat untuk garasi, penyekat ruang tamu, atau toko.",
     specs: [
-      { label: "Sistem", value: "Lipat Dorong" },
-      { label: "Rangka Besi", value: "Hollow Besi 40x40 mm" },
-      { label: "Isian", value: "Tanpa Peredam Khusus (Hollow)" },
-      { label: "Ketebalan Panel", value: "~60 mm" },
-      { label: "Panel Face", value: "Plywood 6 mm" },
-      { label: "Finishing", value: "HPL / Sheet Vinyl" },
-      { label: "Sistem Rel", value: "Rel Atas & Rel Bawah" }
+      { label: "Frame", value: "Frame Hollow Besi 4 x 4" },
+      { label: "Isian", value: "Meranti Wood Inside" },
+      { label: "Panel", value: "Multiplek 9 mm" },
+      { label: "Sistem Rel", value: "Sistem Rel Atas dan Bawah" },
+      { label: "Sistem", value: "Sistem Lipat" },
+      { label: "Kunci", value: "Kunci Slot" },
+      { label: "Finishing", value: "Finishing HPL, Kain & Wallpaper" }
     ],
     bentoFeatures: [
       {
