@@ -1,0 +1,80 @@
+---
+/**
+ * YouTubeGallery Component
+ * Displays YouTube video embeds for installation documentation
+ */
+
+const videos = [
+    {
+        id: "EWGyiFO939I",
+        title: "Instalasi Pintu Partisi Geser Ruang Kelas UNAIR Surabaya"
+    },
+    {
+        id: "u4MyKEYFfrc",
+        title: "Pintu Partisi SOREPA CV. Pireki Asia"
+    },
+    {
+        id: "eu3aS0qcrI4",
+        title: "Pintu Partisi Geser Meredam Suara Ruangan"
+    }
+];
+---
+
+<section class="py-16 bg-white">
+    <div class="container mx-auto px-4 md:px-6">
+        <!-- Header -->
+        <div class="text-center max-w-2xl mx-auto mb-12">
+            <h2 class="text-[#072181] font-bold text-sm uppercase tracking-widest mb-3">
+                Video Dokumentasi
+            </h2>
+            <h3 class="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
+                Proses Pemasangan Partisi
+            </h3>
+            <p class="text-slate-500 mt-4">
+                Lihat langsung proses pemasangan partisi berkualitas oleh tim profesional kami.
+            </p>
+        </div>
+
+        <!-- Video Grid -->
+        <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {videos.map((video) => (
+                <div class="group relative bg-slate-100 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                    <!-- YouTube Embed with Lazy Loading -->
+                    <div class="aspect-video">
+                        <iframe
+                            src={`https://www.youtube.com/embed/${video.id}`}
+                            title={video.title}
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen
+                            loading="lazy"
+                            class="w-full h-full"
+                        ></iframe>
+                    </div>
+                    
+                    <!-- Video Title Overlay -->
+                    <div class="p-4 bg-white">
+                        <h4 class="font-semibold text-slate-800 text-sm">
+                            {video.title}
+                        </h4>
+                    </div>
+                </div>
+            ))}
+        </div>
+
+        <!-- CTA -->
+        <div class="text-center mt-10">
+            <a
+                href="https://www.youtube.com/@pintulipat_sby"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-full transition-colors shadow-lg shadow-red-500/20"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+                </svg>
+                Lihat Semua Video di YouTube
+            </a>
+        </div>
+    </div>
+</section>

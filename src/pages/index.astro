@@ -15,6 +15,7 @@ import BlogSection from "../components/BlogSection.astro";
 import TestimonialCarousel from "../components/TestimonialCarousel.astro";
 import FAQ from "../components/FAQ.astro";
 import CTA from "../components/CTA.astro";
+import YouTubeGallery from "../components/YouTubeGallery.astro";
 
 // Import WordPress API helpers
 import {
@@ -53,6 +54,9 @@ if (!posts || posts.length === 0) {
 
 	<!-- Flow Gallery Section -->
 	<FlowGallery />
+
+	<!-- YouTube Video Gallery -->
+	<YouTubeGallery />
 
 	<!-- Applications Bento Grid -->
 	<BentoGrid />
