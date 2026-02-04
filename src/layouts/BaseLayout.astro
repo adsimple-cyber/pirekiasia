@@ -25,7 +25,7 @@ interface Props {
 const {
   title,
   description = "CV Pireki Asia - Spesialis partisi ruangan redam suara. Manufaktur movable wall dan pintu lipat terbaik di Indonesia.",
-  image = "/og-image.jpg",
+  image = "/OG.png",
 } = Astro.props;
 
 const siteUrl = import.meta.env.SITE_URL || "https://cvpirekiasia.com";
@@ -128,18 +128,40 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
 
     <!-- JSON-LD Structured Data for Google Search -->
     <script type="application/ld+json" is:inline>
-      {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "CV Pireki Asia",
-        "alternateName": ["Pireki Asia", "Pireki"],
-        "url": "https://cvpirekiasia.com",
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": "https://cvpirekiasia.com/search?q={search_term_string}",
-          "query-input": "required name=search_term_string"
+      [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "CV Pireki Asia",
+          "alternateName": ["Pireki Asia", "Pireki"],
+          "url": "https://cvpirekiasia.com",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://cvpirekiasia.com/search?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "CV Pireki Asia",
+          "url": "https://cvpirekiasia.com",
+          "logo": "https://cvpirekiasia.com/favicon.svg",
+          "image": "https://cvpirekiasia.com/OG.png",
+          "description": "Pusat Pintu Lipat, Partisi Ruangan, Pintu Partisi Geser Penyekat Ruangan Meeting Room Aula Ballroom Convention Hall",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Surabaya",
+            "addressRegion": "Jawa Timur",
+            "addressCountry": "ID"
+          },
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+6281234567890",
+            "contactType": "customer service"
+          }
         }
-      }
+      ]
     </script>
   </head>
   <body class="font-sans text-slate-900 antialiased bg-gray-50 relative">
